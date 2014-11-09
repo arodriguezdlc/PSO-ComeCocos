@@ -5,6 +5,8 @@
 /*	Librerias  */
 #include <pthread.h>
 #include <stdio.h>
+/*  Includes propios */
+#include "error.h"
 
 /*
  	A la funcion main le pasamos el path del archivo de mapas
