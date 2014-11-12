@@ -18,7 +18,10 @@ int main(int argc, char * argv) {
 		error(1);
 	else {
 		lecturaMapa(); //TODO
-		//TODO
+		inicializaMapa();
+		//INICIALIZAMOS PROCESOS
+		creaHilos();
+		
 	}
 	return 0;
 }

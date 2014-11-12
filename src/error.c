@@ -15,7 +15,7 @@ void error(int numError) {
 	switch (numError) {
 		case 1:
 		printf("ERROR %d: Numero de parametros incorrectos. 
-			Debe especificar ubicacion del mapa \n", numError);
+			Debe especificar la ubicacion del mapa \n", numError);
 		break;
 		
 	}
