@@ -1,0 +1,2 @@
+Para que lea la libreria ncurses introducir en el terminal:
+sudo apt-get install libncurses5*
