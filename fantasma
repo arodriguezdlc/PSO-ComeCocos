@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+//int opciones = 0;
+//int movimiento;
+int i =1;
+int mov;
+
+int fantasma()
+{
+mov= rand()%4;
+
+	if(mov==0)  {
+		if ((mapa->fantasma[i].y)+1 == ' ') //Podemos movernos hacia arriba
+			(mapa->fantasma[i].y)+1;
+		else{
+			mov = rand()%4;}
+		      }
+	
+	if(mov==1){
+		if ((mapa->fantasma[i].y)-1 == ' ') //Podemos movernos hacia abajo
+	    		(mapa->fantasma[i].y)-1;
+		else	{
+			mov = rand()%4;}
+		    }
+			
+	if(mov==2){
+		if ((mapa->fantasma[i].x)+1 == ' ') // Podemos movernos hacia la derecha
+	    		(mapa->fantasma[i].x)+1;
+		else{
+		  mov = rand()%4;}
+	 	    }
+
+	if(mov==3){
+ 		if ((mapa->fantasma[i].x)-1 == ' ') // Podemos movernos hacia la izquierda
+	    		(mapa->fantasma[i].x)-1;
+		else{
+			mov = rand()%4;}
+		    } 
+return 0;
+}
