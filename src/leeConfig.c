@@ -11,6 +11,8 @@
 #include "inih/ini.h"
 #include "estructuras.h"
 #include "imprimeMapa.h"
+#include "utilConfig.h"
+#include "leeConfig.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -39,145 +41,16 @@ typedef struct mapaAmpliado {
     int control[5]; //Las cinco variables de handler2
 } MAPAAMPLIADO;
 
-
-char * eliminaEspacios(char * buffer);
-
-/*
-*	Funcion que maneja los callbacks de ini_parse. Solo se utilizara en este fichero, 
-*	no se exportará. Se encarga de almacenar los valores del fichero de configuracion
-*	en la estructura MAPA.
-*/
+//Declaracion de funciones internas
 static int handler1(void* user, const char* section, const char* name,
-                   const char* value)
-{
-    MAPA * mapa = (MAPA *) user;
-
-    //fprintf(stdout, "[DEBUG] Entramos en handler1\n");     
-    if        (MATCH("DIMENSIONES", "X")) {
-    	if(mapa->dimensiones.x == 0) {
-    		mapa->dimensiones.x = atoi(value);
-    	} else { //DEBUG    		
-    		fprintf(stdout, "[DEBUG] Leido multiples veces - [DIMENSIONES - X]\n");
-    	}
-    } else if   (MATCH("DIMENSIONES", "Y")) {
-        if(mapa->dimensiones.y == 0) {
-            mapa->dimensiones.y = atoi(value);
-        } else { //DEBUG            
-            fprintf(stdout, "[DEBUG] Leido multiples veces - [DIMENSIONES - Y]\n");
-        }
-    } else if   (MATCH("JUGADORES", "NUM")) {
-        if(mapa->numJugadores == 0) {
-            mapa->numJugadores = atoi(value);
-        } else { //DEBUG            
-            fprintf(stdout, "[DEBUG] Leido multiples veces - [JUGADORES - NUM]\n");
-        }
-    } else if   (MATCH("FANTASMAS", "NUM")) {
-        if(mapa->numFantasmas == 0) {
-            mapa->numFantasmas = atoi(value);
-        } else { //DEBUG            
-            fprintf(stdout, "[DEBUG] Leido multiples veces - [FANTASMAS - NUM]\n");
-        }        
-    } else {
-        //fprintf(stdout, "[DEBUG] Coincidencia no encontrada\n");
-    }
-    return 1;
-}
+                   const char* value);
 
 static int handler2(void* user, const char* section, const char* name,
-                   const char* value)
-{
-    MAPAAMPLIADO * mapaAmpliado = (MAPAAMPLIADO *) user;
-    MAPA * mapa = mapaAmpliado->mapa;
-    char * buffer;
-    char * cadena;
+                   const char* value);
 
-    //MAPEO INICIAL
-    int numJugadoresXLeidos = mapaAmpliado->control[0];
-    int numJugadoresYLeidos = mapaAmpliado->control[1];
-    int numFantasmasXLeidos = mapaAmpliado->control[2];
-    int numFantasmasYLeidos = mapaAmpliado->control[3];
-    int mapaLeido           = mapaAmpliado->control[4];
 
-    //fprintf(stdout, "[DEBUG] Entramos en handler2\n");     
-    if (MATCH("JUGADORES", "X")) {    		
-  		if(numJugadoresXLeidos < mapa->numJugadores) {
-   			mapa->jugador[numJugadoresXLeidos].x = atoi(value);
-   			numJugadoresXLeidos++;
-    	} else {
-    		fprintf(stdout, "[DEBUG] Demasiadas coordenadas X para jugadores - numJugadoresXLeidos = %d\n", ++numJugadoresXLeidos);    			
-       	}
-    } else if (MATCH ("JUGADORES", "Y")) {
-    	if(numJugadoresYLeidos < mapa->numJugadores) {
-    		mapa->jugador[numJugadoresYLeidos].y = atoi(value);
-    		numJugadoresYLeidos++;
-    	} else {
-    		fprintf(stdout, "[DEBUG] Demasiadas coordenadas Y para jugadores - numJugadoresYLeidos = %d\n", ++numJugadoresYLeidos);
-    	}
-    } else if (MATCH ("FANTASMAS", "X")) {
-    	if(numFantasmasXLeidos < mapa->numFantasmas) {
-    		mapa->fantasma[numFantasmasXLeidos].x = atoi(value);
-    		numFantasmasXLeidos++;
-    	} else {
-    		fprintf(stdout, "[DEBUG] Demasiadas coordenadas X para fantasmas - numFantasmasXLeidos = %d\n", ++numFantasmasXLeidos);    		
-    	}
-    } else if (MATCH ("FANTASMAS", "Y")) {
-    	if(numFantasmasYLeidos < mapa->numFantasmas) {
-    		mapa->fantasma[numFantasmasYLeidos].y = atoi(value);
-    		numFantasmasYLeidos++;
-    	} else {
-    		fprintf(stdout, "[DEBUG] Demasiadas coordenadas Y para fantasmas - numFantasmasYLeidos = %d\n", ++numFantasmasYLeidos);    		
-    	}
-    } else if (MATCH ("MAPA", "mapa")) {
-        if(mapaLeido == FALSE) {
-            if(NULL == (buffer = strdup(value))) {
-                fprintf(stderr, "ERROR DE MEMORIA STRDUP\n");
-            } else {
-                cadena = eliminaEspacios(buffer);
-                //LIBERAMOS MEMORIA STRDUP
-                if(NULL != buffer) {
-                    free(buffer);
-                    buffer = NULL;
-                }
-                //procesaCadena();
-                printf("%s", cadena);
-            }
-            mapaLeido = TRUE;
-        } else {
-            fprintf(stdout, "[DEBUG] Mapa ya leido\n");
-        }
-    } else {
-        //fprintf(stdout, "[DEBUG] Coincidencia no encontrada\n");
-    }
-    //TODO LECTURA MAPA!!!!!!!
-    
-    //MAPEO INVERSO FINAL
-    mapaAmpliado->control[0] = numJugadoresXLeidos;
-    mapaAmpliado->control[1] = numJugadoresYLeidos;
-    mapaAmpliado->control[2] = numFantasmasXLeidos;
-    mapaAmpliado->control[3] = numFantasmasYLeidos;
-    mapaAmpliado->control[4] = mapaLeido;
 
-    return 1;    
-}
-char * eliminaEspacios(char * buffer) {
-    
-    size_t i = 0;
-    size_t j = 0;
-    int salir = FALSE;
-    char aux[INI_MAX_LINE];    
-    for(i = 0; salir == FALSE && i < strlen(buffer); i++) {
-        if(!isspace((int) buffer[i])) {
-            for(j = 0; j < (strlen(buffer)-i); j++) {
-                aux[j] = buffer[i];
-                i++;
-            }  
-            salir = TRUE;      
-        }        
-    }
-    aux[j] = '\0';
-    return strdup(aux);    
-}
-
+//AZAHARA ESTA HACIENDOLO
 void procesaCadena(char * cadena, MAPA * mapa) {
     int error;
     unsigned int i;
@@ -238,47 +111,23 @@ int compruebaConfiguracion2(MAPA * mapa) {
     return error;	
 }
 
-int reservaMemoria(MAPA * mapa) {
-	int error = FALSE;	
-	if (NULL == (mapa->mapa = (char **) calloc(mapa->dimensiones.y, sizeof(char *)))) {
-        error = TRUE;
-        printf("Error de memoria\n");
-    } else if (NULL == (mapa->jugador = (COORDENADA *) calloc(mapa->numJugadores, sizeof(COORDENADA)))) {
-		error = TRUE;
-		printf("Error de memoria\n");
-	} else if (NULL == (mapa->fantasma = (COORDENADA *) calloc(mapa->numFantasmas, sizeof(COORDENADA)))) {
-		error = TRUE;
-		printf("Error de memoria\n");
-	}
-	return error;
-}
-
-void liberaMemoria(MAPA * mapa) {
-	unsigned int i; 
-    if(mapa->jugador != NULL) {
-		free(mapa->jugador);
-		mapa->jugador = NULL;		
-	}
-    if(mapa->fantasma != NULL) {
-		free(mapa->fantasma);
-		mapa->fantasma = NULL;
-	} 
-    for(i = 0; i < mapa->dimensiones.y; i++) {
-        if(mapa->mapa[i] != NULL) {
-            free(mapa->mapa[i]);
-            mapa->mapa[i] = NULL;
-        }            
-    }
-    if(mapa->mapa != NULL) {
-        free(mapa->mapa);
-        mapa->mapa = NULL;
-    }
-}
-
+/*
+*   Funcion leeConfig
+*   Descripcion: lee el fichero de configuracion que contiene
+*           - Dimensiones del mapa
+*           - Numero de jugadores y posicion inicial de cada jugador.
+*           - Numero de fantasmas y posicion inicial de cada fantasma.
+*           - Mapa
+*       Almacena los datos en una estructura tipo MAPA y comprueba
+*       si hay errores en el fichero de configuracion. Depende de la libreria INIH, integrada
+*       en el codigo fuente (no es necesaria su instalacion).
+*   Parametros: puntero a estructura MAPA. Sera modificada por la funcion.
+*   Return: devuelve TRUE si se ha producido un error critico y FALSE en caso contrario.
+*/
 int leeConfig(MAPA * mapa) {
-	//fprintf(stdout, "[DEBUG] Entramos en leeConfig\n");
-	
+	//fprintf(stdout, "[DEBUG] Entramos en leeConfig\n");	
     int error = FALSE;
+    //Necesitamos una estructura ampliada para pasarle informacion a los handlers de ini_parse.
     MAPAAMPLIADO mapaAmpliado = {mapa, {0, 0, 0, 0, FALSE}}; 
 	if (ini_parse(FILECONFIG, handler1, mapa) < 0) {
         printf("Can't load 'conftest.ini'\n");       //MODIFICAR!!!!!!!!!!!  
@@ -294,6 +143,130 @@ int leeConfig(MAPA * mapa) {
     	error = TRUE;
     }
     return error;
+}
+
+/*
+*   Funcion que maneja los callbacks de ini_parse. Solo se utilizara en este fichero, 
+*   no se exportará. Se encarga de almacenar los primeros valores del fichero de configuracion
+*   en la estructura MAPA. Posteriormente se llamara una funcion handler2 una vez que se haya
+*   reservado la memoria necesaria e indicada por los datos leidos por handler1.
+*/
+static int handler1(void* user, const char* section, const char* name,
+                   const char* value)
+{
+    MAPA * mapa = (MAPA *) user;
+
+    //fprintf(stdout, "[DEBUG] Entramos en handler1\n");     
+    if        (MATCH("DIMENSIONES", "X")) {
+        if(mapa->dimensiones.x == 0) {
+            mapa->dimensiones.x = atoi(value);
+        } else { //DEBUG            
+            fprintf(stdout, "[DEBUG] Leido multiples veces - [DIMENSIONES - X]\n");
+        }
+    } else if   (MATCH("DIMENSIONES", "Y")) {
+        if(mapa->dimensiones.y == 0) {
+            mapa->dimensiones.y = atoi(value);
+        } else { //DEBUG            
+            fprintf(stdout, "[DEBUG] Leido multiples veces - [DIMENSIONES - Y]\n");
+        }
+    } else if   (MATCH("JUGADORES", "NUM")) {
+        if(mapa->numJugadores == 0) {
+            mapa->numJugadores = atoi(value);
+        } else { //DEBUG            
+            fprintf(stdout, "[DEBUG] Leido multiples veces - [JUGADORES - NUM]\n");
+        }
+    } else if   (MATCH("FANTASMAS", "NUM")) {
+        if(mapa->numFantasmas == 0) {
+            mapa->numFantasmas = atoi(value);
+        } else { //DEBUG            
+            fprintf(stdout, "[DEBUG] Leido multiples veces - [FANTASMAS - NUM]\n");
+        }        
+    } else {
+        //fprintf(stdout, "[DEBUG] Coincidencia no encontrada\n");
+    }
+    return 1;
+}
+
+/*
+*   Funcion que maneja los callbacks de la segunda llamada de ini_parse. Solo se utilizara
+*   en este fichero, no se exportara. Se encarga de almacenar los valores restantes, para los cuales
+*   se ha necesitado reservar memoria. Tambien se encarga de leer el mapa.
+*/
+static int handler2(void* user, const char* section, const char* name,
+                   const char* value)
+{
+    MAPAAMPLIADO * mapaAmpliado = (MAPAAMPLIADO *) user;
+    MAPA * mapa = mapaAmpliado->mapa;
+    char * buffer;
+    char * cadena;
+
+    //MAPEO INICIAL
+    int numJugadoresXLeidos = mapaAmpliado->control[0];
+    int numJugadoresYLeidos = mapaAmpliado->control[1];
+    int numFantasmasXLeidos = mapaAmpliado->control[2];
+    int numFantasmasYLeidos = mapaAmpliado->control[3];
+    int mapaLeido           = mapaAmpliado->control[4];
+
+    //fprintf(stdout, "[DEBUG] Entramos en handler2\n");     
+    if (MATCH("JUGADORES", "X")) {          
+        if(numJugadoresXLeidos < mapa->numJugadores) {
+            mapa->jugador[numJugadoresXLeidos].x = atoi(value);
+            numJugadoresXLeidos++;
+        } else {
+            fprintf(stdout, "[DEBUG] Demasiadas coordenadas X para jugadores - numJugadoresXLeidos = %d\n", ++numJugadoresXLeidos);             
+        }
+    } else if (MATCH ("JUGADORES", "Y")) {
+        if(numJugadoresYLeidos < mapa->numJugadores) {
+            mapa->jugador[numJugadoresYLeidos].y = atoi(value);
+            numJugadoresYLeidos++;
+        } else {
+            fprintf(stdout, "[DEBUG] Demasiadas coordenadas Y para jugadores - numJugadoresYLeidos = %d\n", ++numJugadoresYLeidos);
+        }
+    } else if (MATCH ("FANTASMAS", "X")) {
+        if(numFantasmasXLeidos < mapa->numFantasmas) {
+            mapa->fantasma[numFantasmasXLeidos].x = atoi(value);
+            numFantasmasXLeidos++;
+        } else {
+            fprintf(stdout, "[DEBUG] Demasiadas coordenadas X para fantasmas - numFantasmasXLeidos = %d\n", ++numFantasmasXLeidos);         
+        }
+    } else if (MATCH ("FANTASMAS", "Y")) {
+        if(numFantasmasYLeidos < mapa->numFantasmas) {
+            mapa->fantasma[numFantasmasYLeidos].y = atoi(value);
+            numFantasmasYLeidos++;
+        } else {
+            fprintf(stdout, "[DEBUG] Demasiadas coordenadas Y para fantasmas - numFantasmasYLeidos = %d\n", ++numFantasmasYLeidos);         
+        }
+    } else if (MATCH ("MAPA", "mapa")) {
+        if(mapaLeido == FALSE) {
+            if(NULL == (buffer = strdup(value))) {
+                fprintf(stderr, "ERROR DE MEMORIA STRDUP\n");
+            } else {
+                cadena = eliminaEspacios(buffer);
+                //LIBERAMOS MEMORIA STRDUP
+                if(NULL != buffer) {
+                    free(buffer);
+                    buffer = NULL;
+                }
+                //procesaCadena();
+                printf("%s", cadena);
+            }
+            mapaLeido = TRUE;
+        } else {
+            fprintf(stdout, "[DEBUG] Mapa ya leido\n");
+        }
+    } else {
+        //fprintf(stdout, "[DEBUG] Coincidencia no encontrada\n");
+    }
+    //TODO LECTURA MAPA!!!!!!!
+    
+    //MAPEO INVERSO FINAL
+    mapaAmpliado->control[0] = numJugadoresXLeidos;
+    mapaAmpliado->control[1] = numJugadoresYLeidos;
+    mapaAmpliado->control[2] = numFantasmasXLeidos;
+    mapaAmpliado->control[3] = numFantasmasYLeidos;
+    mapaAmpliado->control[4] = mapaLeido;
+
+    return 1;    
 }
 
 /* Main para testeo */
