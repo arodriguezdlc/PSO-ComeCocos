@@ -6,3 +6,8 @@ leeConfig.o: leeConfig.c
 
 imprimeMapa.o: imprimeMapa.c
 	gcc -g -W -Wall -lncurses -c imprimeMapa.c
+
+clean:
+	rm -rf *.o
+	rm -rf *.out
+	
