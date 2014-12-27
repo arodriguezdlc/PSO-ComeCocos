@@ -5,6 +5,7 @@
 	Tambien define la funcion imprimeMapa.
 */
 
+/*
 typedef struct coordenada {
 	unsigned int x;
 	unsigned int y;
@@ -16,6 +17,8 @@ typedef struct mapa {
 	COORDENADA * fantasma;  //Tabla de posiciones de fantasmas
 	COORDENADA * jugador;   //Tabla de posiciones de jugadores
 } MAPA;
+*/
+
 
 /*
 	-----  FUNCION IMPRIMEMAPA  -----

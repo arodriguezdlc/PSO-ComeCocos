@@ -6,12 +6,18 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #define TAMBUFFER 1000 //maximo tamanio de linea
 #define TRUE 1
 #define FALSE 0 
 
 char * leeMapa(FILE * fichero) {
+
+	
+
+
+
 
 
 	char * mapa; //Puntero al array con el mapa
@@ -38,5 +44,45 @@ char * leeMapa(FILE * fichero) {
 	 //Comprobamos que el mapa esta bien
 	//los criterios habra que documentarlos
 
+
+	//LIBERAR MEMORIAAAAAA
+
 	return mapa;
+}
+
+int leeLineaConfiguracion (FILE * fichero) {
+	char caracter;
+	int error = FALSE
+	if((caracter = fgetc(fichero) == EOF) {
+		error = error(); //TODO
+	} else {
+		switch(caracter) {
+			case d :
+				error = leeDimensiones(FILE * fichero); //COMPROBAR QUE SOLO SE LEE UNA VEZ
+				break;
+			case f :
+				error = leePosicionFantasma(FILE * fichero);
+				break;
+			case j :
+				error = leePosicionJugador(FILE * fichero);
+				break;
+			default:
+				error = error(); //NO ES UNA OPCION VALIDA
+		}
+	}
+	return error;
+}
+
+int leeDimensiones(FILE * fichero) {
+	if(quitaEspacios(fichero != 'x')) {
+		error(); //ERROR DE FORMATO
+	}
+	
+}
+
+/* Devuelve el primer caracter que no es un espacio (en int) */
+int quitaEspacios(FILE * fichero) {
+	int caracter;
+	while(isspace(caracter = fgetc(fichero)));
+	return caracter;
 }

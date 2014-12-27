@@ -22,6 +22,7 @@ int main(int argc, char * argv) {
 		//INICIALIZAMOS PROCESOS
 		creaHilos();
 		
+		
 	}
 	return 0;
 }

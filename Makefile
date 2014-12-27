@@ -10,15 +10,17 @@
 #####################################################
 
 #VARIABLES MAKEFILE:
-OPTIONS= -g -W -Wall -pthread 
+OPTIONS= -g -W -Wall -pthread -lncurses
 
 #Enlazamos los ficheros objeto
-PSO-Comecocos:  principal.o
-    gcc -o PSO-Comecocos principal.o 
+PSO-Comecocos.out: principal.o
+	gcc -o PSO-Comecocos.out principal.o 
 
 principal.o: principal.c
-    gcc $(OPTIONS) -c principal.c 
+	gcc $(OPTIONS) -c principal.c -o principal.o
 
 clean: 
-    rm -rf *.o
-    
+	cd bin
+	rm -rf *.o && rm -rf *.out
+	cd ..
+	

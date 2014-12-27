@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ncurses.h>
+#include "estructuras.h"
 #include "imprimeMapa.h"
 
 /*
