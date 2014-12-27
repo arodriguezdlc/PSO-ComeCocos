@@ -12,6 +12,8 @@ typedef struct coordenada {
 typedef struct mapa {
 	char ** mapa;		    //Mapa sin jugadores ni fantasmas	
 	COORDENADA dimensiones; //Dimensiones del mapa
+	int numFantasmas;		//Numero de fantasmas
+	int numJugadores;		//Numero de jugadores
 	COORDENADA * fantasma;  //Tabla de posiciones de fantasmas
 	COORDENADA * jugador;   //Tabla de posiciones de jugadores
 } MAPA;
@@ -33,16 +35,38 @@ void imprimeMapa(MAPA mapa, int inicio) {
 
 	unsigned int x;
 	unsigned int y;
+	int i;
+	char simboloJugador = 'C';
+	char simboloFantasma = 'A';
 	if(inicio != 0) {
 		initscr(); //Inicializamos la pantalla
+		if (has_colors()) {
+  			start_color();
+  			init_pair(1, COLOR_RED, COLOR_BLACK);
+  			init_pair(2, COLOR_BLUE, COLOR_BLACK);
+  			init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+  		}
 	} 	
 	erase(); //Limpiamos la pantalla
 	mvprintw(0,0, "COMECOCOS - PROYECTO S.O"); //Titulo
-	//Impresion del mapa
+	//Impresion del mapa (Color amarillo)
+
 	for (y = 0; y < mapa.dimensiones.y; y++) {		
 		for(x = 0; x < mapa.dimensiones.x; x++) {	
 			//Se deja a la y un margen de 2 para que quepa el titulo		
 			mvprintw(y+2, x, "%c", mapa.mapa[y][x]);
 		}		
+	}
+	//Impresion de jugadores	
+	for (i = 0; i < mapa.numJugadores; i++) {
+		attron(COLOR_PAIR(i+1));
+		mvprintw((mapa.jugador[i].y)+2, mapa.jugador[i].x, "%c", simboloJugador);
+		attroff(COLOR_PAIR(i+1));
+	}
+	//Impresion de fantasmas
+	for (i = 0; i < mapa.numFantasmas; i++) {
+		attron(COLOR_PAIR(i+1));
+		mvprintw((mapa.fantasma[i].y)+2, mapa.fantasma[i].x, "%c", simboloFantasma);
+		attroff(COLOR_PAIR(i+1));
 	}
 }

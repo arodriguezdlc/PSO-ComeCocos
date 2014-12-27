@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <ncurses.h>
-
+#include "estructuras.h"
+#include "imprimeMapa.h"
+/*
 typedef struct coordenada {
 	unsigned int x;
 	unsigned int y;
@@ -9,9 +11,12 @@ typedef struct coordenada {
 typedef struct mapa {
 	char ** mapa;		    //Mapa sin jugadores ni fantasmas	
 	COORDENADA dimensiones; //Dimensiones del mapa
+	int numFantasmas;		//Numero de fantasmas
+	int numJugadores;		//Numero de jugadores
 	COORDENADA * fantasma;  //Tabla de posiciones de fantasmas
 	COORDENADA * jugador;   //Tabla de posiciones de jugadores
 } MAPA;
+*/
 
 /*
 	Funcion imprimeMapa:
@@ -25,6 +30,7 @@ typedef struct mapa {
 	e imprime el mapa si jugadores ni fantasmas.
 	Return => nada (void)		 
 */
+/*
 void imprimeMapa(MAPA mapa, int inicio) {
 
 	unsigned int x;
@@ -42,6 +48,7 @@ void imprimeMapa(MAPA mapa, int inicio) {
 		}		
 	}
 }
+*/
 /*
 void imprimir(char ** mapa) {
 
@@ -68,10 +75,12 @@ int main() {
 	for(i = 0; i < 10; i++) {
 		aux[i] = cuadrado[i];
 	}
+	COORDENADA fantasmas[3] = {{3,3}, {4,4}, {5,5}};
+	COORDENADA jugadores[3] = {{5,3}, {6,4}, {7,5}};
 
 	//printf("cuadrado[0][0] = %d",(int) &cuadrado[0][0]);
 
-	MAPA mapaPrueba = { (char **) &aux, {20, 10}, NULL, NULL} ;	
+	MAPA mapaPrueba = { (char **) &aux, {20, 10}, 3, 3, jugadores, fantasmas } ;	
 	//MAPA mapaPrueba = { (char **) cuadrado, {20,20}, NULL, NULL};
 
 
