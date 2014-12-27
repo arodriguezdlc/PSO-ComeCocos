@@ -18,6 +18,9 @@ typedef struct mapa {
 	COORDENADA * jugador;   //Tabla de posiciones de jugadores
 } MAPA;
 */
+#define COLISION 10
+#define NUM_MAX_JUG 3
+#define NUM_MAX_FANT 3
 /*
 	-----  FUNCION IMPRIMEMAPA  -----
 	Argumentos => 
@@ -37,7 +40,7 @@ void imprimeMapa(MAPA mapa, int inicio) {
 	unsigned int y;
 	int i;
 	char simboloJugador = 'C';
-	char simboloFantasma = 'A';
+	char simboloFantasma = 'A';	
 	if(inicio != 0) {
 		initscr(); //Inicializamos la pantalla
 		if (has_colors()) {
@@ -45,6 +48,8 @@ void imprimeMapa(MAPA mapa, int inicio) {
   			init_pair(1, COLOR_RED, COLOR_BLACK);
   			init_pair(2, COLOR_BLUE, COLOR_BLACK);
   			init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+
+  			init_pair(COLISION, COLOR_WHITE, COLOR_BLACK);
   		}
 	} 	
 	erase(); //Limpiamos la pantalla
@@ -57,8 +62,10 @@ void imprimeMapa(MAPA mapa, int inicio) {
 			mvprintw(y+2, x, "%c", mapa.mapa[y][x]);
 		}		
 	}
-	//Impresion de jugadores	
+	//Impresion de jugadores
+	//detectaColisiones(MAPA * mapa);	TODO
 	for (i = 0; i < mapa.numJugadores; i++) {
+
 		attron(COLOR_PAIR(i+1));
 		mvprintw((mapa.jugador[i].y)+2, mapa.jugador[i].x, "%c", simboloJugador);
 		attroff(COLOR_PAIR(i+1));
@@ -70,3 +77,18 @@ void imprimeMapa(MAPA mapa, int inicio) {
 		attroff(COLOR_PAIR(i+1));
 	}
 }
+/* TODO - NO ESTA TERMINADO
+void detectaColisiones(MAPA * mapa) {
+	int i; 
+	for (i = 0; i < mapa.numJugadores; i++) {
+		for (j = 0; j < mapa.numJugadores; i++) {
+			if((i != j) && (mapa.jugadores[i].x == mapa.jugadores[j].x) && (mapa.jugadores[i].y == mapa.jugadores[j].y
+					&& (mapa.jugadores[i].x != 0 || mapa.jugadores[i].y != 0))) {
+				mapa.jugadores[j].x = 0;
+				mapa.jugadores[j].y = 0;
+			}
+		}
+	}
+}
+*/
+

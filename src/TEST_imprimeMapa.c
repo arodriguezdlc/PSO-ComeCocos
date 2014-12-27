@@ -72,9 +72,11 @@ int main() {
 	};
 	char * aux[10];
 	int i;
+	char tecla;
 	for(i = 0; i < 10; i++) {
 		aux[i] = cuadrado[i];
 	}
+	
 	COORDENADA fantasmas[3] = {{3,3}, {4,4}, {5,5}};
 	COORDENADA jugadores[3] = {{5,3}, {6,4}, {7,5}};
 
@@ -88,7 +90,39 @@ int main() {
 
 	mvprintw(mapaPrueba.dimensiones.y + 3,0, "PARA SALIR PULSE q");
 	noecho();
-	while((char) getch() != 'q') ;
+	
+	while((tecla = (char) getch()) != 'q') {
+		switch (tecla) {
+			case 'w': 
+				for (i = 0; i < mapaPrueba.numJugadores; i++)
+					(mapaPrueba.jugador[i].y)--;
+				for (i = 0; i < mapaPrueba.numFantasmas; i++)
+					(mapaPrueba.fantasma[i].y)--;
+				break;
+			case 's': 
+				for (i = 0; i < mapaPrueba.numJugadores; i++)
+					(mapaPrueba.jugador[i].y)++;	
+				for (i = 0; i < mapaPrueba.numFantasmas; i++)
+					(mapaPrueba.fantasma[i].y)++;				
+				break;
+			case 'd': 
+				for (i = 0; i < mapaPrueba.numJugadores; i++)
+					(mapaPrueba.jugador[i].x)++;
+				for (i = 0; i < mapaPrueba.numFantasmas; i++)
+					(mapaPrueba.fantasma[i].x)++;
+				break;
+			case 'a': 
+				for (i = 0; i < mapaPrueba.numJugadores; i++)
+					(mapaPrueba.jugador[i].x)--;
+				for (i = 0; i < mapaPrueba.numFantasmas; i++)
+					(mapaPrueba.fantasma[i].x)--;
+				break;
+			default: 
+				;
+		}
+		imprimeMapa(mapaPrueba, false);
+		mvprintw(mapaPrueba.dimensiones.y + 3,0, "PARA SALIR PULSE q");
+	}
 
 	endwin();
 
