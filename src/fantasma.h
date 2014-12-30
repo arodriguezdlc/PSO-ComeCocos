@@ -1,3 +1,3 @@
 //Funciones de fantasma.
 void fantasma(MAPA * mapa);
-int comprueba(int *posibles);
+int comprueba(int *posibles, MAPA * mapa);

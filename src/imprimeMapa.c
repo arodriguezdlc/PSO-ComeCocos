@@ -41,7 +41,7 @@ void imprimeMapa(MAPA mapa, int inicio) {
 	int i;
 	char simboloJugador = 'C';
 	char simboloFantasma = 'A';	
-	if(inicio != 0) {
+	if(inicio != 0) {		
 		initscr(); //Inicializamos la pantalla
 		if (has_colors()) {
   			start_color();
