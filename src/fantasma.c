@@ -5,9 +5,9 @@
 #include "fantasma.h"
 //int cla = 0;
 
-void fantasma(MAPA * mapa, int * cla)//Función fantasma que es de tipo void y recibe el mapa del comecocos
+void fantasma(MAPA * mapa, int i ,int * cla)//Función fantasma que es de tipo void y recibe el mapa del comecocos
 {
-int i = 0;
+//int i = 0; //Id de fantasma
 //int cla = 0;//Memoria del fantasma para recordar el último movimiento
 int mov=5;//Variable para ver el movimiento que realizará el fantasma
 int ok = 0;//VAriable de comprobación de movimiento correcto
