@@ -18,7 +18,7 @@ mov=comprueba(&posibles, mapa);//mov será igual al parametro recibido de mi fun
 
 while(ok==0){//Mientras Ok sea igual a 0, intento realizar un movimiento
 	if(mov==0){//Si el movimiento es 0(Subir)
-		if ((mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]==' ') || (mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]=='-')) //Condición para poder subir
+		if ((mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]==' '))// || (mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]=='-')) //Condición para poder subir
         {
 			if(dir!='B'||posibles==1)	{//Comprobamos que el movimiento anterior no fuera bajar, o que solo haya 1 camino
 				(mapa->fantasma[i].y)-=1;//Nuestra variable tiene que ser distinta de B, para que no vuelva a bajar
@@ -109,7 +109,7 @@ int comprueba(int *posibles, MAPA * mapa)//Funcion que comprueba el numero de mo
 int i = 0;//variable de control
 int tabla[4] = {0, 0, 0, 0};//tabla de enteros para comprobacion 0=subir, 1=bajar, 2=derecha, 3=izquierda
 int mov = 0;
-	if ((mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]==' ') || (mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]=='-'))
+	if ((mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]==' '))// || (mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]=='-'))
 	{
 		(*posibles)++;//Si puedo Subir aumento las posibilidades en 1
 		tabla[0]=1;//Guardo en mi tabla que Subir que es el puesto 0 es = 1
