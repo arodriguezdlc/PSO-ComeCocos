@@ -19,7 +19,7 @@ while(ok==0)
 		if(mov==0)
 		{//Si el movimiento es 0(Subir)
 			if ((mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]) == ' ') //|| (mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]=='-')) //Condición para poder subir
-	        {
+	        	{
 				if(dir!='B' || posibles==1)	
 				{//Comprobamos que el movimiento anterior no fuera bajar, o que solo haya 1 camino
 					dir = 'S';//recuerdo el movimiento de subir
