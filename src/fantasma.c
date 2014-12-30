@@ -3,26 +3,26 @@
 #include <ncurses.h>
 #include "estructuras.h"
 #include "fantasma.h"
+//int cla = 0;
 
-
-void fantasma(MAPA * mapa)//Función fantasma que es de tipo void y recibe el mapa del comecocos
+void fantasma(MAPA * mapa, int cla)//Función fantasma que es de tipo void y recibe el mapa del comecocos
 {
 int i = 0;
-char dir = 'N';//Memoria del fantasma para recordar el último movimiento
+int cla = 0;//Memoria del fantasma para recordar el último movimiento
 int mov=5;//Variable para ver el movimiento que realizará el fantasma
 int ok = 0;//VAriable de comprobación de movimiento correcto
 int posibles = 0;//Variables para guardar movimientos posibles de fantasma
 mov=comprueba(&posibles, mapa);//mov será igual al parametro recibido de mi funcion comprueba
-
 while(ok==0)
 	{//Mientras Ok sea igual a 0, intento realizar un movimiento
+
 		if(mov==0)
 		{//Si el movimiento es 0(Subir)
 			if ((mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]) == ' ') //|| (mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]=='-')) //Condición para poder subir
-	        	{
-				if(dir!='B' || posibles==1)	
+	        {
+				if(cla != 2 || posibles==1)	
 				{//Comprobamos que el movimiento anterior no fuera bajar, o que solo haya 1 camino
-					dir = 'S';//recuerdo el movimiento de subir
+					cla = 1;//recuerdo el movimiento de subir
 					(mapa->fantasma[i].y)-=1;//Nuestra variable tiene que ser distinta de B, para que no vuelva a bajar
 					ok++;//Aumento Ok para salir del bucle				
 				}
@@ -45,9 +45,9 @@ while(ok==0)
 		{
 			if ((mapa->mapa[mapa->fantasma[i].y+1][mapa->fantasma[i].x]) == ' ') //Condición para Bajar
 			{
-				if(dir!='S' || posibles==1)	
+				if(cla != 1 || posibles==1)	
 				{//Decimos que sea distinto de Subir para que no haga bucle
-					dir = 'B';
+					cla = 2;
 		    		(mapa->fantasma[i].y)+=1;
 					ok++;
 				}			
@@ -68,11 +68,11 @@ while(ok==0)
 				
 		if(mov==2)
 		{
-			if ((mapa->mapa[mapa->fantasma[i].y][mapa->fantasma[i].x-1]) == ' ') // Podemos movernos hacia la derecha
+			if ((mapa->mapa[mapa->fantasma[i].y][mapa->fantasma[i].x-1]) == ' ') // Podemos movernos hacia la izquierda
 			{
-				if(dir!='D' || posibles==1)	
+				if(cla != 3  || posibles==1)	
 				{
-					dir = 'I';
+					cla = 4;;
 		    		(mapa->fantasma[i].x)-=1;
 					ok++;			
 				}
@@ -93,11 +93,11 @@ while(ok==0)
 
 		if(mov==3)
 		{
-	 		if ((mapa->mapa[mapa->fantasma[i].y][mapa->fantasma[i].x+1]) == ' ') // Podemos movernos hacia la izquierda
+	 		if ((mapa->mapa[mapa->fantasma[i].y][mapa->fantasma[i].x+1]) == ' ') // Podemos movernos hacia la derecha
 			{
-				if(dir!='I' || posibles==1)	
+				if(cla != 4 || posibles==1)	
 				{
-					dir = 'D';
+					cla = 3;
 		    		(mapa->fantasma[i].x)+=1;
 					ok++;			
 				}
@@ -118,6 +118,7 @@ while(ok==0)
 	} 
 	mvprintw(mapa->dimensiones.y + 5,0, "mov = %d", mov);
 }
+
 
 int comprueba(int *posibles, MAPA * mapa)//Funcion que comprueba el numero de movimientos posibles para el fantasma
 {//La función devuelve un entero que será mov y recibe un puntero a la variable posibles de la función fantasma
@@ -156,4 +157,3 @@ int mov = 0;
 		mov = rand()%4;//Igualo movimiento al valor devuelto por el rand
 return mov;//Devuelvo mov		
 }
-
