@@ -106,7 +106,7 @@ while(ok==0)
 					do
 					mov = rand()%4;
 					while(mov==3);
-			    }
+				 }
 			}
 			else	
 			{
