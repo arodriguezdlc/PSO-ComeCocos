@@ -12,13 +12,13 @@ void fantasma(MAPA * mapa, int i ,int * cla)//Función fantasma que es de tipo v
 int mov=5;//Variable para ver el movimiento que realizará el fantasma
 int ok = 0;//VAriable de comprobación de movimiento correcto
 int posibles = 0;//Variables para guardar movimientos posibles de fantasma
-mov=comprueba(&posibles, mapa);//mov será igual al parametro recibido de mi funcion comprueba
+mov=comprueba(&posibles,i, mapa);//mov será igual al parametro recibido de mi funcion comprueba
 while(ok==0)
 	{//Mientras Ok sea igual a 0, intento realizar un movimiento
 
 		if(mov==0)
 		{//Si el movimiento es 0(Subir)
-			if ((mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]) == ' ') //|| (mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]=='-')) //Condición para poder subir
+			if (((mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]) == ' ') || (mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]=='-')) //Condición para poder subir
 	        {
 				if(*cla != 2 || posibles==1)	
 				{//Comprobamos que el movimiento anterior no fuera bajar, o que solo haya 1 camino
@@ -120,12 +120,12 @@ while(ok==0)
 }
 
 
-int comprueba(int *posibles, MAPA * mapa)//Funcion que comprueba el numero de movimientos posibles para el fantasma
+int comprueba(int *posibles, int i, MAPA * mapa)//Funcion que comprueba el numero de movimientos posibles para el fantasma
 {//La función devuelve un entero que será mov y recibe un puntero a la variable posibles de la función fantasma
-int i = 0;//variable de control
+int j = 0;//variable de control
 int tabla[4] = {0, 0, 0, 0};//tabla de enteros para comprobacion 0=subir, 1=bajar, 2=derecha, 3=izquierda
 int mov = 0;
-	if ((mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]) == ' ')// || (mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]=='-'))
+	if (((mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]) == ' ') || (mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]=='-'))
 	{
 		(*posibles)++;//Si puedo Subir aumento las posibilidades en 1
 		tabla[0]=1;//Guardo en mi tabla que Subir que es el puesto 0 es = 1
@@ -147,10 +147,10 @@ int mov = 0;
 	}
 	if(*posibles == 1)//Si solo tenemos un camino posible
 	{
-		for(i=0;i<4;i++)//Recorro mi tabla para ver cual es el único camino posible
+		for(j=0;j<4;j++)//Recorro mi tabla para ver cual es el único camino posible
 		{
-			if(tabla[i]==1)//El camino posible tendrá puesto en su posición de memoria un 1
-				mov=i;//Igualo el movimiento a mi variable auxiliar que coincidirá con mi movimiento permitido
+			if(tabla[j]==1)//El camino posible tendrá puesto en su posición de memoria un 1
+				mov=j;//Igualo el movimiento a mi variable auxiliar que coincidirá con mi movimiento permitido
 		}	
 	}
 	else//En caso de que haya mas de 1 posibilidad elijo un numero aleatorio entre[0-3]
