@@ -13,7 +13,7 @@ void controles1(char * right, char * left, char * up, char * down, char controle
 
 
 
-void jugador1 (int cambiocontroles, char controlesj1[4]){
+void jugador1 (MAPA * mapa, int cambiocontroles, char controlesj1[4]){
 
 char right = 'd';
 char left = 'a';

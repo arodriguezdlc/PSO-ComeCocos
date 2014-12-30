@@ -40,7 +40,7 @@ void imprimeMapa(MAPA mapa, int inicio) {
 	unsigned int y;
 	int i;
 	char simboloJugador = 'C';
-	char simboloFantasma = 'A';	
+	//char simboloFantasma = 'A';	
 	if(inicio != 0) {
 		initscr(); //Inicializamos la pantalla
 		if (has_colors()) {
@@ -71,11 +71,11 @@ void imprimeMapa(MAPA mapa, int inicio) {
 		attroff(COLOR_PAIR(i+1));
 	}
 	//Impresion de fantasmas
-	for (i = 0; i < mapa.numFantasmas; i++) {
+	/*for (i = 0; i < mapa.numFantasmas; i++) {
 		attron(COLOR_PAIR(i+1));
 		mvprintw((mapa.fantasma[i].y)+2, mapa.fantasma[i].x, "%c", simboloFantasma);
 		attroff(COLOR_PAIR(i+1));
-	}
+	}*/
 }
 /* TODO - NO ESTA TERMINADO
 void detectaColisiones(MAPA * mapa) {
