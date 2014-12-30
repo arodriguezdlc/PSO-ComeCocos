@@ -24,8 +24,11 @@ int dir= 0;//vble para el switch
 
 if(cambiocontroles != 0)
 	controles1(&right, &left, &up, &down, &controlesj1[4]);//si se han cambiado los controles del jugador uno, sustituye los que vienen por defecto
+
+noecho();
 cbreak();
-//flushinp();//vaciar buffer del teclado
+
+flushinp();//vaciar buffer del teclado
 mov = getch();
 
 if(mov==right) dir = 1;
@@ -34,13 +37,13 @@ else if (mov == up) dir = 3;
 else if (mov == down) dir = 4;
 
 switch(dir){
-	case(1):if(mapa->jugador[1].y+1==' ') (mapa->jugador[1].y)+1;
+	case(1):if(mapa->mapa[mapa->jugador[0].y][mapa->jugador[0].x+1]==' ') (mapa->jugador[0].x)+=1;
 	break;
-	case(2):if(mapa->jugador[1].y-1==' ') (mapa->jugador[1].y)-1;
+	case(2):if(mapa->mapa[mapa->jugador[0].y][mapa->jugador[0].x-1]==' ') (mapa->jugador[0].x)-=1;
 	break;
-	case(3):if(mapa->jugador[1].x-1==' ') (mapa->jugador[1].x)-1;
+	case(3):if(mapa->mapa[mapa->jugador[0].y-1][mapa->jugador[0].x]==' ') (mapa->jugador[0].y)-=1;
 	break;
-	case(4):if(mapa->jugador[1].x+1==' ') (mapa->jugador[1].x)+1;
+	case(4):if(mapa->mapa[mapa->jugador[0].y+1][mapa->jugador[0].x]==' ') (mapa->jugador[0].y)+=1;
 	break;
 	}
 }

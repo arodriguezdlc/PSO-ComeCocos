@@ -29,22 +29,21 @@ int main() {
 	};
 	char * aux[DIMY];
 	int i;
-	char tecla;
-	for(i = 0; i < 10; i++) {
+	
+	for(i = 0; i < DIMY; i++) {
 		aux[i] = cuadrado[i];
 	}
 
-	COORDENADA jugadores[NUMJUGADORES] = {{2,2}};
+	COORDENADA jugadores[NUMJUGADORES] = {{1,1}};
 	//COORDENADA fantasmas[NUMFANTASMAS] = {{8,7}};
 	
 
-	MAPA mapa = { (char **) &aux, {DIMY, DIMX}, NUMFANTASMAS, NUMJUGADORES, jugadores, NULL } ;
+	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, NULL, jugadores } ;
 
-	imprimeMapa(mapa, true);
-	while((tecla = (char) getch()) != 'q') {
+	imprimeMapa(mapa, true);	
+	while(1) {
 		jugador1(&mapa, 0, NULL);
-		imprimeMapa(mapa, false);
-		mvprintw(mapa.dimensiones.y + 3,0, "PARA SALIR PULSE q");		
+		imprimeMapa(mapa, false);			
 		mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones);
 	}
 

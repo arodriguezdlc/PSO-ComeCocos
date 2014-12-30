@@ -12,3 +12,7 @@ imprimeMapa.o: imprimeMapa.c
 jugador.o: jugador.c
 	gcc -g -W -Wall -c jugador.c
 
+clean:
+	rm -rf *.o
+	rm -rf a.out*
+
