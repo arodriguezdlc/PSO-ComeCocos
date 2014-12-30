@@ -1,7 +1,7 @@
 
 
 a.out: TEST_fantasma.o imprimeMapa.o jugador.o fantasma.o
-	gcc -g -W -Wall -lncurses TEST_fantasma.o imprimeMapa.o jugador.o fantasma.o
+	gcc -g -W -Wall TEST_fantasma.o imprimeMapa.o jugador.o fantasma.o -lncurses 
 
 TEST_fantasma.o: TEST_fantasma.c
 	gcc -g -W -Wall -c TEST_fantasma.c	
