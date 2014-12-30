@@ -48,7 +48,7 @@ while(ok==0)
 				if(dir!='S' || posibles==1)	
 				{//Decimos que sea distinto de Subir para que no haga bucle
 					dir = 'B';
-		    		(mapa->fantasma[i].y)-=1;
+		    		(mapa->fantasma[i].y)+=1;
 					ok++;
 				}			
 				else	
