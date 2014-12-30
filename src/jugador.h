@@ -1,1 +1,1 @@
-void jugador1 (MAPA * mapa, int cambiocontroles, char controlesj1[4]);
+void jugador (MAPA * mapa, int cambiocontroles, char controlesj1[4]);

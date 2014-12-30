@@ -6,6 +6,10 @@
 		Azahara María Porras Tejada
 		Francisco Javier Rodríguez López
 */
+#ifndef PTHREAD
+#define PTHREAD
+	#include <pthread.h>
+#endif
 
 typedef struct coordenada {
 	unsigned int x;
@@ -20,3 +24,26 @@ typedef struct mapa {
 	COORDENADA * fantasma;  //Tabla de posiciones de fantasmas
 	COORDENADA * jugador;   //Tabla de posiciones de jugadores
 } MAPA;
+
+typedef struct controles {	
+	char arriba;	//Tecla asignada a arriba
+	char abajo;		//Tecla asignada a abajo
+	char derecha;	//Tecla asignada a derecha
+	char izquierda;	//Tecla asignada a izquierda
+} CONTROLES; 
+
+typedef struct jugador {
+	unsigned int id;
+	CONTROLES controles;
+	MAPA * mapa;
+} JUGADOR; 
+
+typedef struct fantasma {
+	unsigned int id;
+	MAPA * mapa;
+} FANTASMA; 
+
+typedef struct hilos {
+	pthread_t * fantasma;
+	pthread_t * jugador;		
+} HILOS;

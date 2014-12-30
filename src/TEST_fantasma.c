@@ -45,7 +45,7 @@ int main() {
 
 	imprimeMapa(mapa, true);	
 	while(1) {
-		jugador1(&mapa, 0, NULL);
+		jugador(&mapa, 0, NULL);
 		fantasma(&mapa, 0, &cla1);
 		fantasma(&mapa, 1, &cla2);
 		fantasma(&mapa, 2, &cla3);

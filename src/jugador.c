@@ -3,7 +3,7 @@
 #include <ncurses.h>
 #include "estructuras.h"
 
-void controles1(char * right, char * left, char * up, char * down, char controlesj1[4]){
+void controles(char * right, char * left, char * up, char * down, char controlesj1[4]){
 
 *right = controlesj1[0];
 *left = controlesj1[1];
@@ -13,7 +13,7 @@ void controles1(char * right, char * left, char * up, char * down, char controle
 
 
 
-void jugador1 (MAPA * mapa, int cambiocontroles, char controlesj1[4]){
+void jugador (MAPA * mapa, int cambiocontroles, char controlesj1[4]){
 
 char right = 'd';
 char left = 'a';
@@ -23,7 +23,7 @@ char mov;//vble para guardar el caracter pulsado
 int dir= 0;//vble para el switch
 
 if(cambiocontroles != 0)
-	controles1(&right, &left, &up, &down, &controlesj1[4]);//si se han cambiado los controles del jugador uno, sustituye los que vienen por defecto
+	controles(&right, &left, &up, &down, &controlesj1[4]);//si se han cambiado los controles del jugador uno, sustituye los que vienen por defecto
 
 noecho();
 cbreak();
