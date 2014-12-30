@@ -30,6 +30,7 @@ int main() {
 	};
 	char * aux[DIMY];
 	int i;
+	int cla = 0; //Memoria Fantasma
 	
 	for(i = 0; i < DIMY; i++) {
 		aux[i] = cuadrado[i];
@@ -44,7 +45,7 @@ int main() {
 	imprimeMapa(mapa, true);	
 	while(1) {
 		jugador1(&mapa, 0, NULL);
-		fantasma(&mapa);
+		fantasma(&mapa, &cla);
 		//sleep(1);
 		imprimeMapa(mapa, false);			
 		mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones);

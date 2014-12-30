@@ -5,10 +5,10 @@
 #include "fantasma.h"
 //int cla = 0;
 
-void fantasma(MAPA * mapa, int cla)//Función fantasma que es de tipo void y recibe el mapa del comecocos
+void fantasma(MAPA * mapa, int * cla)//Función fantasma que es de tipo void y recibe el mapa del comecocos
 {
 int i = 0;
-int cla = 0;//Memoria del fantasma para recordar el último movimiento
+//int cla = 0;//Memoria del fantasma para recordar el último movimiento
 int mov=5;//Variable para ver el movimiento que realizará el fantasma
 int ok = 0;//VAriable de comprobación de movimiento correcto
 int posibles = 0;//Variables para guardar movimientos posibles de fantasma
@@ -20,9 +20,9 @@ while(ok==0)
 		{//Si el movimiento es 0(Subir)
 			if ((mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]) == ' ') //|| (mapa->mapa[mapa->fantasma[i].y-1][mapa->fantasma[i].x]=='-')) //Condición para poder subir
 	        {
-				if(cla != 2 || posibles==1)	
+				if(*cla != 2 || posibles==1)	
 				{//Comprobamos que el movimiento anterior no fuera bajar, o que solo haya 1 camino
-					cla = 1;//recuerdo el movimiento de subir
+					*cla = 1;//recuerdo el movimiento de subir
 					(mapa->fantasma[i].y)-=1;//Nuestra variable tiene que ser distinta de B, para que no vuelva a bajar
 					ok++;//Aumento Ok para salir del bucle				
 				}
@@ -45,9 +45,9 @@ while(ok==0)
 		{
 			if ((mapa->mapa[mapa->fantasma[i].y+1][mapa->fantasma[i].x]) == ' ') //Condición para Bajar
 			{
-				if(cla != 1 || posibles==1)	
+				if(*cla != 1 || posibles==1)	
 				{//Decimos que sea distinto de Subir para que no haga bucle
-					cla = 2;
+					*cla = 2;
 		    		(mapa->fantasma[i].y)+=1;
 					ok++;
 				}			
@@ -70,9 +70,9 @@ while(ok==0)
 		{
 			if ((mapa->mapa[mapa->fantasma[i].y][mapa->fantasma[i].x-1]) == ' ') // Podemos movernos hacia la izquierda
 			{
-				if(cla != 3  || posibles==1)	
+				if(*cla != 3  || posibles==1)	
 				{
-					cla = 4;;
+					*cla = 4;;
 		    		(mapa->fantasma[i].x)-=1;
 					ok++;			
 				}
@@ -95,9 +95,9 @@ while(ok==0)
 		{
 	 		if ((mapa->mapa[mapa->fantasma[i].y][mapa->fantasma[i].x+1]) == ' ') // Podemos movernos hacia la derecha
 			{
-				if(cla != 4 || posibles==1)	
+				if(*cla != 4 || posibles==1)	
 				{
-					cla = 3;
+					*cla = 3;
 		    		(mapa->fantasma[i].x)+=1;
 					ok++;			
 				}
