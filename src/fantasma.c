@@ -1,27 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <fantasma.h>
+#include <ncurses.h>
 //int opciones = 0;
 //int movimiento;
-int i =1;
-char dir;
-int mov;
-int OK = 0;
 
-int fantasma()
+void fantasma(MAPA * mapa)//Función fantasma que es de tipo void y recibe el mapa del comecocos
 {
-mov = rand()%4;
+//int i =1;
+char dir;//Memoria del fantasma para recordar el último movimiento
+int mov=5;//Variable para ver el movimiento que realizará el fantasma
+int OK = 0;//VAriable de comprobación de movimiento correcto
+int posibles;//Variables para guardar movimientos posibles de fantasma
+mov=comprueba(&posibles);//mov será igual al parametro recibido de mi funcion comprueba
 
-while(OK==0){
-	if(mov==0){
+while(OK==0){//Mientras Ok sea igual a 0, intento realizar un movimiento
+	if(mov==0){//Si el movimiento es 0(Subir)
 		if ((mapa->fantasma[i].y)+1 == ' ' || mapa->fantasma[i].y)+1 == '-') //Condición para poder subir
 		       {
-			if(dir!='B')	{//Comprobamos
+			if(dir!='B'||posibles==1)	{//Comprobamos que el movimiento anterior no fuera bajar, o que solo haya 1 camino
 				(mapa->fantasma[i].y)+1;//Nuestra variable tiene que ser distinta de B, para que no vuelva a bajar
-				dir = 'S';
-				OK++;				
+				dir = 'S';//recuerdo el movimiento de subir
+				OK++;//Aumento Ok para salir del bucle				
 					}
-			else	{
-				do
+			else	{//En caso contrario busco otro movimiento con la función rand
+				do//Creo el do while para que el valor de mov no coincida con el que se acaba de comprobar
 				mov = rand()%4;
 				while(mov==0)
 				}
@@ -36,7 +39,7 @@ while(OK==0){
 	if(mov==1){
 		if ((mapa->fantasma[i].y)-1 == ' ') //Condición para Bajar
 			{
-			if(dir!='S')	{//Decimos que sea distinto de Subir para que no haga bucle
+			if(dir!='S'||posibles==1)	{//Decimos que sea distinto de Subir para que no haga bucle
 	    			(mapa->fantasma[i].y)-1;
 				dir = 'B';
 				OK++;
@@ -57,7 +60,7 @@ while(OK==0){
 	if(mov==2){
 		if ((mapa->fantasma[i].x)+1 == ' ') // Podemos movernos hacia la derecha
 			{
-			if(dir!='D')	{
+			if(dir!='D'||posibles==1)	{
 	    			(mapa->fantasma[i].x)+1;
 				dir = 'I';
 				OK++;			
@@ -78,7 +81,7 @@ while(OK==0){
 	if(mov==3){
  		if ((mapa->fantasma[i].x)-1 == ' ') // Podemos movernos hacia la izquierda
 			{
-			if(dir!='I')	{
+			if(dir!='I'||posibles==1)	{
 	    			(mapa->fantasma[i].x)-1;
 				dir = 'D';
 				OK++;			
@@ -96,5 +99,43 @@ while(OK==0){
 		    	}
 		   }
 } 
-return 0;
 }
+
+int comprueba(int *posibles)//Funcion que comprueba el numero de movimientos posibles para el fantasma
+{//La función devuelve un entero que será mov y recibe un puntero a la variable posibles de la función fantasma
+int i;//variable de control
+int tabla[4];//tabla de enteros para comprobacion 0=subir, 1=bajar, 2=derecha, 3=izquierda
+int mov;
+	if ((mapa->fantasma[i].y)+1 == ' ' || mapa->fantasma[i].y)+1 == '-')
+	{
+		*posibles++;//Si puedo Subir aumento las posibilidades en 1
+		tabla[0]=1;//Guardo en mi tabla que Subir que es el puesto 0 es = 1
+	}
+	if ((mapa->fantasma[i].y)-1 == ' ')
+	{
+		*posibles++;//Si puedo bajar aumento posibilidades en 1
+		tabla[1]=1;//Guardo en mi tabla que Bajar que es el puesto 1 es = 1
+	}
+	if ((mapa->fantasma[i].x)+1 == ' ')
+	{
+		*posibles++;//Si puedo ir a la Derecha aumento las posibilidades en 1
+		tabla[2]=1;//Guardo en mi tabla que Derecha que es el puesto 2 es = 1
+	}
+	if ((mapa->fantasma[i].x)-1 == ' ')
+	{
+		*posibles++;//Si puedo ir a la Izquierda aumento las posibilidades en 1
+		tabla[3]=1;//Guardo en mi tabla que Izquierda que es el puesto 3 es = 1
+	}
+	if(*posibles == 1)//Si solo tenemos un camino posible
+	{
+		for(i=0;i<4;i++)//Recorro mi tabla para ver cual es el único camino posible
+		{
+			if(tabla[i]==1)//El camino posible tendrá puesto en su posición de memoria un 1
+				mov=i;//Igualo el movimiento a mi variable auxiliar que coincidirá con mi movimiento permitido
+		}	
+	}
+	else//En caso de que haya mas de 1 posibilidad elijo un numero aleatorio entre[0-3]
+		mov = rand()%4;//Igualo movimiento al valor devuelto por el rand
+return mov;//Devuelvo mov		
+}
+
