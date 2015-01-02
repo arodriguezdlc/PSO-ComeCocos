@@ -1,6 +1,6 @@
 
 
-a.out: TEST_fantasma.o imprimeMapa.o jugador.o fantasma.o choque.o
+a.out: TEST_fantasma.o imprimeMapa.o jugador.o fantasma.o
 	gcc -g -W -Wall TEST_fantasma.o imprimeMapa.o jugador.o fantasma.o choque.o -lncurses
 
 hilos: imprimeMapa.o jugador.o fantasma.o hilos.o principal.o

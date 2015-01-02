@@ -51,16 +51,14 @@ int main() {
 		jugador(&mapa, 0, NULL, 0);
 		if(choque(&mapa, 0,0)!=0)//para atravesarlo
 			gameover++;
-		if(choque(&mapa, 1,0)!=0)
-			gameover++;
-		if(choque(&mapa, 2,0)!=0)
-			gameover++;
 		fantasma(&mapa, 0, &cla1);
 
 		fantasma(&mapa, 1, &cla2);
-
+		if(choque(&mapa, 1,0)!=0)
+			gameover++;
 		fantasma(&mapa, 2, &cla3);
-
+		if(choque(&mapa, 2,0)!=0)
+			gameover++;
 		//sleep(1);
 		imprimeMapa(mapa, false);
 		if(choque(&mapa, 0,0)!=0||choque(&mapa, 1,0)!=0||choque(&mapa, 2,0)!=0)//para acabar en el mismo punto
