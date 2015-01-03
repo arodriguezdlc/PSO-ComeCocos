@@ -58,22 +58,22 @@ int main(int argc, char ** argv) {
 	COORDENADA jugadores[NUMJUGADORES] = {{1,1}};
 	COORDENADA fantasmas[NUMFANTASMAS] = {{7,6}, {9,6}, {11,6}};
 	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, fantasmas, jugadores } ;
-	printf("probando");
+	
 	//Comprobamos numero de argumentos
 	if (argc != NUMARGS) {		
 		//error(1);
 		printf("%s: Numero de argumentos incorrecto\n", argv[0]);
 	} else {
-		imprimeMapa(mapa, TRUE);	 
+		imprimeMapa(mapa, TRUE);		 
 		if (creaHilos(&mapa, &hilos)) {
+			endwin();
 			printf("Error en creaHilos\n");
 		} else {	
-			//TEMPORIZACION DEL PROGRAMA:
-			printf("imprimeMapa");
+			//TEMPORIZACION DEL PROGRAMA:			
 			imprimeMapa(mapa, TRUE);
-			for (i = 0; i < MAX_IT; i++) {
-				sleep(1);
-				enviaSenial(mapa, hilos);
+			for (i = 0; i < MAX_IT; i++) {					
+				sleep(1);			
+				enviaSenial(mapa, hilos);				
 				imprimeMapa(mapa, FALSE);			
 				mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones); 
 			}
