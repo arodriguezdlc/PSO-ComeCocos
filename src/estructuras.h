@@ -7,15 +7,17 @@
 *		Francisco Javier Rodríguez López
 */
 
-#ifndef PTHREAD
-#define PTHREAD
-	#include <pthread.h>
-#endif
+//REQUIERE DE PTHREAD.H Y SEMAPHORE.H
 
 typedef struct coordenada {
 	unsigned int x;
 	unsigned int y;
 } COORDENADA;
+
+typedef struct semaforo {
+	sem_t * jugador;
+	sem_t * fantasma;
+} SEMAFORO;
 
 typedef struct mapa {
 	char ** mapa;		    //Mapa sin jugadores ni fantasmas	
@@ -24,6 +26,7 @@ typedef struct mapa {
 	int numJugadores;		//Numero de jugadores
 	COORDENADA * fantasma;  //Tabla de posiciones de fantasmas
 	COORDENADA * jugador;   //Tabla de posiciones de jugadores
+	SEMAFORO semaforo;	
 } MAPA;
 
 //	Estructura con la configuracion de controles de un jugador

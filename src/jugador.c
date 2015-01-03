@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
+#include <pthread.h>
+#include <semaphore.h>
 #include "estructuras.h"
 
 void controles(char * right, char * left, char * up, char * down, char controlesj1[4]){

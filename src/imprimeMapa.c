@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <ncurses.h>
+#include <pthread.h>
+#include <semaphore.h>
 #include "estructuras.h"
 #include "imprimeMapa.h"
 

@@ -3,8 +3,8 @@
 a.out: TEST_jugador.o imprimeMapa.o jugador.o fantasma.o choque.o
 	gcc -g -W -Wall TEST_jugador.o imprimeMapa.o jugador.o fantasma.o choque.o -lncurses
 
-hilos: imprimeMapa.o jugador.o fantasma.o hilos.o principal.o
-	gcc -g -W -Wall -pthread imprimeMapa.o jugador.o fantasma.o hilos.o principal.o -lncurses 
+hilos: imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o 
+	gcc -g -W -Wall -pthread imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o -lncurses 
 
 TEST_jugador.o: TEST_jugador.c
 	gcc -g -W -Wall -c TEST_jugador.c	
@@ -29,6 +29,9 @@ hilos.o: hilos.c
 
 principal.o: principal.c
 	gcc -g -W -Wall -c principal.c
+
+semaforos.o: semaforos.c
+	gcc -g -W -Wall -c semaforos.c
 
 clean:
 	rm -rf *.o

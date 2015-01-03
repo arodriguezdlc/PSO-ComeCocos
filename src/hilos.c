@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
-#ifndef PTHREAD
-#define PTHREAD
-	#include <pthread.h>
-#endif
+#include <pthread.h>
+#include <semaphore.h>
+
 #include "estructuras.h"
 #include "fantasma.h"
 #include "jugador.h"
@@ -13,7 +12,6 @@
 
 #define TRUE 1
 #define FALSE 0
-#define SENIAL SIGALRM
 
 /*
 *	Funcion de inicio del hilo de jugador
@@ -42,9 +40,8 @@ void * hiloJugador (void * pjugador) {
 	//manejaSenial(&set); 
 	
 	while(1) {						
-		jugador(jug.mapa, 1, tablaControles, jug.id);
-		pause();
-		//sigwait(&set, &sig);
+		sem_wait(&jug.mapa->semaforo.jugador[jug.id]);
+		jugador(jug.mapa, 1, tablaControles, jug.id);			
 	}
 	pthread_exit(NULL);
 }
@@ -58,13 +55,10 @@ void * hiloJugador (void * pjugador) {
 */
 void * hiloFantasma (void * pfantasma)  {
 	FANTASMA fant = { ((FANTASMA *) pfantasma)->id, ((FANTASMA *) pfantasma)->mapa }; 	
-	//sigset_t set; 
-	//int sig;
-	//manejaSenial(&set); 
+	
 	int cla = 0;
 	while(1) {		
-		//sigwait(&set, &sig);
-		pause();
+		sem_wait(&fant.mapa->semaforo.fantasma[fant.id]);		
 		fantasma(fant.mapa, fant.id, &cla);
 	}
 	pthread_exit(NULL);
@@ -141,33 +135,6 @@ void liberaHilos(HILOS * hilos) {
 		free(hilos->fantasma);
 		hilos->fantasma = NULL; 
 	}
-}
-
-/*
-*	Funcion enviaSenial
-*	Descripcion: envia una senial a todos los hilos creados por la funcion creaHilos
-*	Parametros: estructura MAPA y estructura HILOS, habiendose llamado anteriormente 
-*		a la funcion creaHilos.
-*	Return: nada
-*/
-void enviaSenial(MAPA mapa, HILOS hilos) {
-	int i;
-	for(i = 0; i < mapa.numJugadores; i++) {
-		pthread_kill(hilos.jugador[i], SENIAL);
-	}
-	for(i = 0; i < mapa.numFantasmas; i++) {
-		pthread_kill(hilos.fantasma[i], SENIAL);
-	}	
-}
-/*
-*	Funcion manejaSenial
-*	Descripcion: configura la captura de las seniales en los hilos.
-*	Parametros: sigset_t * set
-*	Return: nada
-*/
-void manejaSenial(sigset_t * set) {
-	sigemptyset(set);
-	sigaddset(set, SENIAL); 
 }
 
 /*
