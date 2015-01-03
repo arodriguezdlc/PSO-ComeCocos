@@ -56,12 +56,14 @@ void imprimeMapa(MAPA mapa, int inicio) {
 	erase(); //Limpiamos la pantalla
 	
 	mvprintw(0,0, "COMECOCOS - PROYECTO S.O"); //Titulo
+	refresh();
 	//Impresion del mapa (Color amarillo)
 
 	for (y = 0; y < mapa.dimensiones.y; y++) {		
 		for(x = 0; x < mapa.dimensiones.x; x++) {	
 			//Se deja a la y un margen de 2 para que quepa el titulo		
 			mvprintw(y+2, x, "%c", mapa.mapa[y][x]);
+			refresh();
 		}		
 	}
 	//Impresion de jugadores
@@ -70,12 +72,14 @@ void imprimeMapa(MAPA mapa, int inicio) {
 
 		attron(COLOR_PAIR(i+1));
 		mvprintw((mapa.jugador[i].y)+2, mapa.jugador[i].x, "%c", simboloJugador);
+		refresh();
 		attroff(COLOR_PAIR(i+1));
 	}
 	//Impresion de fantasmas
 	for (i = 0; i < mapa.numFantasmas; i++) {
 		attron(COLOR_PAIR(i+1));
 		mvprintw((mapa.fantasma[i].y)+2, mapa.fantasma[i].x, "%c", simboloFantasma);
+		refresh();
 		attroff(COLOR_PAIR(i+1));
 	}
 }

@@ -26,10 +26,10 @@ if(cambiocontroles != 0)
 	controles(&right, &left, &up, &down, &controlesj1[4]);//si se han cambiado los controles del jugador uno, sustituye los que vienen por defecto
 
 noecho();
-cbreak();
-
-flushinp();//vaciar buffer del teclado
+//cbreak();
+nodelay(stdscr,TRUE);
 mov = getch();
+flushinp();//vaciar buffer del teclado
 
 if(mov==right) dir = 1;
 else if (mov == left) dir = 2;
