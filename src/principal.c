@@ -60,24 +60,26 @@ int main(int argc, char ** argv) {
 	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, fantasmas, jugadores } ;
 	printf("probando");
 	//Comprobamos numero de argumentos
-	if (argc != NUMARGS) {
-		
+	if (argc != NUMARGS) {		
 		//error(1);
-		printf("Numero de argumentos incorrecto\n");
-	} else if (creaHilos(&mapa, &hilos)) {
-		printf("Error en creaHilos\n");
-	} else {	
-		//TEMPORIZACION DEL PROGRAMA:
-		printf("imprimeMapa");
-		imprimeMapa(mapa, TRUE);
-		for (i = 0; i < MAX_IT; i++) {
-			sleep(1);
-			enviaSenial(mapa, hilos);
-			imprimeMapa(mapa, FALSE);			
-			mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones); 
+		printf("%s: Numero de argumentos incorrecto\n", argv[0]);
+	} else {
+		imprimeMapa(mapa, TRUE);	 
+		if (creaHilos(&mapa, &hilos)) {
+			printf("Error en creaHilos\n");
+		} else {	
+			//TEMPORIZACION DEL PROGRAMA:
+			printf("imprimeMapa");
+			imprimeMapa(mapa, TRUE);
+			for (i = 0; i < MAX_IT; i++) {
+				sleep(1);
+				enviaSenial(mapa, hilos);
+				imprimeMapa(mapa, FALSE);			
+				mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones); 
+			}
+			liberaHilos(&hilos);
 		}
-		liberaHilos(&hilos);
+		endwin();
 	}
-	endwin();
 	return 0;
 }

@@ -1,11 +1,12 @@
 /*
 *	Estructuras basicas del programa
 *	Autores:
-		Alberto Rodríguez de la Cruz
-		Juan Antonio Piñero Pérez
-		Azahara María Porras Tejada
-		Francisco Javier Rodríguez López
+*		Alberto Rodríguez de la Cruz
+*		Juan Antonio Piñero Pérez
+*		Azahara María Porras Tejada
+*		Francisco Javier Rodríguez López
 */
+
 #ifndef PTHREAD
 #define PTHREAD
 	#include <pthread.h>
@@ -25,6 +26,7 @@ typedef struct mapa {
 	COORDENADA * jugador;   //Tabla de posiciones de jugadores
 } MAPA;
 
+//	Estructura con la configuracion de controles de un jugador
 typedef struct controles {	
 	char arriba;	//Tecla asignada a arriba
 	char abajo;		//Tecla asignada a abajo
@@ -32,18 +34,21 @@ typedef struct controles {
 	char izquierda;	//Tecla asignada a izquierda
 } CONTROLES; 
 
+//	Estructura de parametros que se le pasa al hilo del jugador
 typedef struct jugador {
 	unsigned int id;
 	CONTROLES controles;
 	MAPA * mapa;
 } JUGADOR; 
 
+//	Estructura de parametros que se le pasa al hilo del fantasma
 typedef struct fantasma {
 	unsigned int id;
 	MAPA * mapa;
 } FANTASMA; 
 
+//	Estructura donde almacenar los identificadores de los hilos de jugadores y fantasmas.
 typedef struct hilos {
-	pthread_t * fantasma;
-	pthread_t * jugador;		
+	pthread_t * fantasma;	//Puntero a tabla de identificadores de fantasmas
+	pthread_t * jugador;	//Puntero a tabla de identificadores de jugadores
 } HILOS;

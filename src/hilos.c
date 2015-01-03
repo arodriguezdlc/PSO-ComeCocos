@@ -36,12 +36,12 @@ void * hiloJugador (void * pjugador) {
 									jug.controles.abajo
 								} ;
 
-	sigset_t set; 
-	int sig;
+	sigset_t set;	
+	int sig;	
 	manejaSenial(&set); 
 	
 	while(1) {						
-		jugador(jug.mapa, 1, tablaControles);
+		jugador(jug.mapa, 1, tablaControles, jug.id);
 		sigwait(&set, &sig);
 	}
 	pthread_exit(NULL);
@@ -97,12 +97,12 @@ int creaHilos(MAPA * mapa, HILOS * hilos) {
 		printf("error de memoria\n");		
 	} else {
 		for(i = 0; i < mapa->numJugadores; i++) {
-			pjugador[i] = jugador;
+			dupStructJug(jugador, &pjugador[i]);
 			pjugador[i].id = i;
 			pthread_create(&(hilos->jugador[i]), NULL, hiloJugador,  &pjugador[i]);
 		}
 		for(i = 0; i < mapa->numFantasmas; i++) {
-			pfantasma[i] = fantasma;
+			dupStructFant(fantasma, &pfantasma[i]);
 			pfantasma[i].id = i;
 			pthread_create(&(hilos->fantasma[i]), NULL, hiloFantasma, &pfantasma[i]);
 		}
@@ -165,4 +165,32 @@ void enviaSenial(MAPA mapa, HILOS hilos) {
 void manejaSenial(sigset_t * set) {
 	sigemptyset(set);
 	sigaddset(set, SENIAL); 
+}
+
+/*
+*	Funcion dupStructJug
+*	Descripcion: duplica una estructura JUGADOR en otra, realizando la asignacion
+*	de cada parametro.
+*	Parametros: estructura JUGADOR de origen y puntero a estructura JUGADOR destino.
+*	Return: nada.
+*/
+void dupStructJug(JUGADOR origen, JUGADOR * destino) {	
+	destino->id = origen.id;
+	destino->controles.arriba = origen.controles.arriba;
+	destino->controles.abajo = origen.controles.abajo;
+	destino->controles.derecha = origen.controles.derecha;
+	destino->controles.izquierda = origen.controles.izquierda;
+	destino->mapa = origen.mapa;
+}
+
+/*
+*	Funcion dupStructFant
+*	Descripcion: duplica una estructura FANTASMA en otra, realizando la asignacion
+*	de cada parametro.
+*	Parametros: estructura FANTASMA de origen y puntero a estructura FANTASMA destino.
+*	Return: nada.
+*/
+void dupStructFant(FANTASMA origen, FANTASMA * destino) {
+	destino->id = origen.id;	
+	destino->mapa = origen.mapa;
 }
