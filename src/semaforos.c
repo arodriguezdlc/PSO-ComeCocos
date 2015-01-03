@@ -26,7 +26,7 @@ int creaSemaforos(MAPA * mapa) {
 		error = TRUE;
 	}
 	for(i = 0; (error == FALSE) && (i < mapa->numJugadores); i++) {
-		if(0 != sem_init(&mapa->semaforo.jugador[i], 0, 0));
+		if(0 != sem_init(&mapa->semaforo.jugador[i], 0, 0))
 			printf("Error en semaforo.jugador[%d]\n", i);
 			error = TRUE;
 	}
