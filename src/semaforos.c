@@ -14,8 +14,8 @@ int creaSemaforos(MAPA * mapa) {
 
 	int i;
 	int error = FALSE;
-	char nombreSemaforo[] = "semComeCocos-PSO-no.00"
-	nombreSemaforo[21] = '0';
+	//char nombreSemaforo[] = "semComeCocos-PSO-no.00"
+	//nombreSemaforo[21] = '0';
 
 	if(NULL == (mapa->semaforo.jugador = calloc(mapa->numJugadores, sizeof(sem_t)))) {		
 		printf("Error de memoria (semaforos - jugadores)\n");
@@ -26,7 +26,7 @@ int creaSemaforos(MAPA * mapa) {
 		error = TRUE;
 	}
 	for(i = 0; (error == FALSE) && (i < mapa->numJugadores); i++) {
-		if(0 != sem_init(&mapa->semaforo.jugador[i], 0, 0))
+		if(0 != sem_init(&mapa->semaforo.jugador[i], 0, 0));
 			printf("Error en semaforo.jugador[%d]\n", i);
 			error = TRUE;
 	}
