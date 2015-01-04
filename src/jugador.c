@@ -15,13 +15,13 @@ void controles(char * right, char * left, char * up, char * down, char controles
 
 
 
-void jugador (MAPA * mapa, int cambiocontroles, char controlesj1[4], int j){
+void jugador (MAPA * mapa, int cambiocontroles, char controlesj1[4], int j, char mov){
 
 char right = 'd';
 char left = 'a';
 char up = 'w';
 char down = 's';
-char mov;//vble para guardar el caracter pulsado
+//char mov;//vble para guardar el caracter pulsado
 int dir= 0;//vble para el switch
 
 if(cambiocontroles != 0)
@@ -29,9 +29,9 @@ if(cambiocontroles != 0)
 
 noecho();
 //cbreak();
-nodelay(stdscr,TRUE);
-mov = getch();
-flushinp();//vaciar buffer del teclado
+//nodelay(stdscr,TRUE);
+//mov = getch();
+//flushinp();//vaciar buffer del teclado
 
 if(mov==right) dir = 1;
 else if (mov == left) dir = 2;

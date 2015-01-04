@@ -117,8 +117,12 @@ while(ok==0)
 				while(mov==3);
 			}
 		}
+<<<<<<< HEAD:src juanan hilos/fantasma.c
 	} 
 	//mvprintw(mapa->dimensiones.y + 5,0, "mov = %d", mov);
+=======
+	} 	
+>>>>>>> 2e9e7c87784c2d30b01a64407f896b5e91bb25bb:srcjuanan hilos/fantasma.c
 }
 
 

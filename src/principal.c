@@ -15,6 +15,7 @@
 #include "semaforos.h"
 #include "hilos.h"
 #include "imprimeMapa.h"
+#include "keyboard.h"
 
 #define NUMARGS			1
 #define MAX_IT			3000
@@ -53,7 +54,8 @@ int main(int argc, char ** argv) {
 	for(i = 0; i < DIMY; i++) {
 		aux[i] = cuadrado[i];
 	}
-	HILOS hilos; 
+	HILOS hilos;
+	struct moving a; 
 	COORDENADA jugadores[NUMJUGADORES] = {{1,1}};
 	COORDENADA fantasmas[NUMFANTASMAS] = {{7,6}, {9,6}, {11,6}};
 	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, fantasmas, jugadores, {0, 0} } ;
@@ -67,8 +69,11 @@ int main(int argc, char ** argv) {
 	} else if (creaHilos(&mapa, &hilos)) {			
 		printf("Error en creaHilos\n");
 	} else {			
+
+		creaHilosKb(&a);
 			//TEMPORIZACION DEL PROGRAMA:			
 		imprimeMapa(mapa, TRUE);
+
 		for (i = 0; i < MAX_IT; i++) {					
 			subirSemaforos(&mapa);
 			sleep(1);								

@@ -1,10 +1,10 @@
 
 
 a.out: TEST_jugador.o imprimeMapa.o jugador.o fantasma.o choque.o 
-	gcc -g -W -Wall -pthread TEST_jugador.o imprimeMapa.o jugador.o fantasma.o choque.o -lncurses
+	gcc -g -W -Wall -pthread TEST_jugador.o imprimeMapa.o jugador.o fantasma.o choque.o -lncurses -lpthread
 
-hilos: imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o 
-	gcc -g -W -Wall -pthread imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o -lncurses 
+hilos: imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o keyboard.o
+	gcc -g -W -Wall -pthread imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o keyboard.o -lncurses -lpthread
 
 TEST_jugador.o: TEST_jugador.c
 	gcc -g -W -Wall -c TEST_jugador.c	
@@ -15,8 +15,8 @@ imprimeMapa.o: imprimeMapa.c
 choque.o: choque.c
 	gcc -g -W -Wall -c choque.c
 
-kbhit.o: kbhit.c
-	gcc -g -W -Wall -c kbhit.c	
+keyboard.o: keyboard.c
+	gcc -g -W -Wall -c keyboard.c	
 
 jugador.o: jugador.c
 	gcc -g -W -Wall -c jugador.c
