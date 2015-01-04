@@ -80,6 +80,7 @@ int main(int argc, char ** argv) {
 			sleep(1);								
 			imprimeMapa(mapa, FALSE);				
 			mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones);
+			refresh();
 		}
 		liberaHilos(&hilos);
 	}		
