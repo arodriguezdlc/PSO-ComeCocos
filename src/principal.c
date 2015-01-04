@@ -60,7 +60,8 @@ int main(int argc, char ** argv) {
 	COORDENADA jugadores[NUMJUGADORES] = {{1,1}};
 	COORDENADA fantasmas[NUMFANTASMAS] = {{7,6}, {9,6}, {11,6}};
 	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, fantasmas, jugadores, {0, 0} } ;
-	
+	MAPAANT mapaAnt;
+
 	//Comprobamos numero de argumentos
 	if (argc != NUMARGS) {		
 		//error(1);
@@ -77,10 +78,13 @@ int main(int argc, char ** argv) {
 
 		for (i = 0; i < MAX_IT; i++) {							
 			sleep(1);
-			subirSemaforos(&mapa);								
+			guardamapa(&mapa, &mapaAnt);
+			subirSemaforos(&mapa);			
 			imprimeMapa(mapa, FALSE);				
 			mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones);
 			refresh();
+			if(choque(&mapa, &mapaAnt, mapa.numFantasmas, mapa.numJugadores))
+				i = MAX_IT;
 		}
 		liberaHilos(&hilos);
 	}		
