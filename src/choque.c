@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <ncurses.h>
 
 #include "estructuras.h"
 
@@ -22,7 +23,8 @@ while(j>0){
 		}
 	j--;
 	}
-
+			mvprintw(mapa->dimensiones.y + 3,0, "posiciones Cnuevo = %d, %d Cant = %d, %d Fnuevo = %d, %d Fant %d, %d resultado %d", mapa->jugador[0].x,mapa->jugador[0].y, mapaAnt->jugador[0].x,mapaAnt->jugador[0].y, mapa->fantasma[0].x,mapa->fantasma[0].y, mapaAnt->fantasma[0].x,mapaAnt->fantasma[0].y, resultado);
+refresh();
 return resultado;
 }
 
