@@ -78,13 +78,13 @@ int main(int argc, char ** argv) {
 		mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", 0);
 		creaHilosKb(&moving);
 
-		for (i = 0; i < MAX_IT; i++) {							
+		for (i = 0; i < MAX_IT;i++) {							
 			sleep(1);
 			guardamapa(&mapa, &mapaAnt);
 			subirSemaforos(&mapa);			
 			imprimeMapa(mapa, FALSE);				
 			mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones);
-			mvprintw(mapa.dimensiones.y + 3,0, "posiciones Cnuevo = %d, %d Cant = %d, %d Fnuevo = %d, %d Fant %d, %d", mapa->jugador[0].x,mapa->jugador[0].y, mapaAnt->jugador[0].x,mapaAnt->jugador[0].y, mapa->fantasma[0].x,mapa->fantasma[0].y, mapaAnt->fantasma[0].x,mapaAnt->fantasma[0].y);
+			mvprintw(mapa.dimensiones.y + 3,0, "posiciones Cnuevo = %d, %d Cant = %d, %d Fnuevo = %d, %d Fant %d, %d resultado %d", mapa.jugador[0].x,mapa.jugador[0].y, mapaAnt.jugador[0].x,mapaAnt.jugador[0].y, mapa.fantasma[0].x,mapa.fantasma[0].y, mapaAnt.fantasma[0].x,mapaAnt.fantasma[0].y, i);
 			refresh();
 			if(choque(&mapa, &mapaAnt, mapa.numFantasmas, mapa.numJugadores))
 				i = MAX_IT;
