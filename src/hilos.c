@@ -40,7 +40,7 @@ void * hiloJugador (void * pjugador) {
 	//manejaSenial(&set); 
 	
 	while(1) {						
-		sem_wait(&jug.mapa->semaforo.jugador[jug.id]);
+		sem_wait(jug.mapa->semaforo.jugador[jug.id]);
 		jugador(jug.mapa, 1, tablaControles, jug.id);			
 	}
 	pthread_exit(NULL);
@@ -58,7 +58,7 @@ void * hiloFantasma (void * pfantasma)  {
 	
 	int cla = 0;
 	while(1) {		
-		sem_wait(&fant.mapa->semaforo.fantasma[fant.id]);		
+		sem_wait(fant.mapa->semaforo.fantasma[fant.id]);		
 		fantasma(fant.mapa, fant.id, &cla);
 	}
 	pthread_exit(NULL);

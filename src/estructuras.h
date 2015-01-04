@@ -15,8 +15,8 @@ typedef struct coordenada {
 } COORDENADA;
 
 typedef struct semaforo {
-	sem_t * jugador;
-	sem_t * fantasma;
+	sem_t ** jugador;
+	sem_t ** fantasma;
 } SEMAFORO;
 
 typedef struct mapa {

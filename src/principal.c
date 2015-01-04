@@ -78,7 +78,7 @@ int main(int argc, char ** argv) {
 		liberaHilos(&hilos);
 	}		
 	endwin();		
-	eliminaSemaforos(&mapa);
+	eliminaSemaforos(&mapa, FALSE);
 	
 	return 0;
 }

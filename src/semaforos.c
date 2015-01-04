@@ -3,6 +3,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <ncurses.h>
+#include <fcntl.h>
 
 #include "estructuras.h"
 #include "semaforos.h"
@@ -14,54 +15,79 @@ int creaSemaforos(MAPA * mapa) {
 
 	int i;
 	int error = FALSE;
-	//char nombreSemaforo[] = "semComeCocos-PSO-no.00"
-	//nombreSemaforo[21] = '0';
+	char nombreSemaforoJug[] = "ComeCocosJug-0";
+	char nombreSemaforoFant[] = "ComeCocosFant-0";
+	
+	eliminaSemaforos(mapa, TRUE);
 
-	if(NULL == (mapa->semaforo.jugador = calloc(mapa->numJugadores, sizeof(sem_t)))) {		
-		printf("Error de memoria (semaforos - jugadores)\n");
-		error = TRUE;
+	for(i = 0; i < mapa->numJugadores; i++) {
+		if(NULL == (mapa->semaforo.jugador = calloc(mapa->numJugadores, sizeof(sem_t *)))) {
+			printf("Error de memoria (semaforo - jugador)\n");
+			error = TRUE;
+		}			
 	}
-	if(NULL == (mapa->semaforo.fantasma = calloc(mapa->numFantasmas, sizeof(sem_t)))) {
-		printf("Error de memoria (semaforos - fantasmas)\n");
-		error = TRUE;
+	for(i = 0; i < mapa->numFantasmas; i++) {
+		if(NULL == (mapa->semaforo.fantasma = calloc(mapa->numFantasmas, sizeof(sem_t *)))) {
+			printf("Error de memoria (semaforo - fantasma)\n");
+			error = TRUE;
+		}			
 	}
-	for(i = 0; (error == FALSE) && (i < mapa->numJugadores); i++) {
-		if(0 != sem_init(&mapa->semaforo.jugador[i], 0, 0))
+
+	for(i = 0; (error == FALSE) && (i < mapa->numJugadores); i++) {		
+		if(SEM_FAILED == (mapa->semaforo.jugador[i] = sem_open(nombreSemaforoJug, O_CREAT, 0600, 0))) { 
 			printf("Error en semaforo.jugador[%d]\n", i);
 			error = TRUE;
+		}
+		nombreSemaforoJug[13]++;
 	}
 	for(i = 0; (error == FALSE) && (i < mapa->numFantasmas); i++) {
-		if(0 != sem_init(&mapa->semaforo.fantasma[i], 0, 0))
+		if(SEM_FAILED == (mapa->semaforo.fantasma[i] = sem_open(nombreSemaforoFant, O_CREAT, 0600, 0))) {
 			printf("Error en semaforo.fantasma[%d]\n", i);
 			error = TRUE;
+		}
+		nombreSemaforoFant[14]++;
 	}	
 	return error;
 }
 
-void eliminaSemaforos(MAPA * mapa) {
+void eliminaSemaforos(MAPA * mapa, int primeraVez) {
 	int i;
+	char nombreSemaforoJug[] = "ComeCocosJug-0";
+	char nombreSemaforoFant[] = "ComeCocosFant-0";
 	for(i = 0; i < mapa->numJugadores; i++) {
-		sem_destroy(&mapa->semaforo.jugador[i]);
+		if(primeraVez == FALSE) {
+			sem_close(mapa->semaforo.jugador[i]);
+		}
+		sem_unlink(nombreSemaforoJug);
+		nombreSemaforoJug[13]++;
 	}	
 	for(i = 0; i < mapa->numFantasmas; i++) {
-		sem_destroy(&mapa->semaforo.fantasma[i]);
+		if(primeraVez == FALSE) {
+			sem_close(mapa->semaforo.fantasma[i]);
+		}
+		sem_unlink(nombreSemaforoFant);
+		nombreSemaforoFant[14]++;
 	}
-	if(NULL != mapa->semaforo.jugador) {
-		free(mapa->semaforo.jugador);
-		mapa->semaforo.jugador = NULL;
+	for(i = 0; i < mapa->numJugadores; i++) {
+		if(NULL != mapa->semaforo.jugador) {
+			free(mapa->semaforo.jugador);
+			mapa->semaforo.jugador = NULL;
+		}
 	}
-	if(NULL != mapa->semaforo.fantasma) {
-		free(mapa->semaforo.fantasma);
-		mapa->semaforo.fantasma = NULL;
+	for(i = 0; i < mapa->numFantasmas; i++) {
+		if(NULL != mapa->semaforo.fantasma) {
+			free(mapa->semaforo.fantasma);
+			mapa->semaforo.fantasma = NULL;
+		}
 	}
 }
 
 void subirSemaforos(MAPA * mapa) {
 	int i;
 	for(i = 0; i < mapa->numJugadores; i++) {
-		sem_post(&mapa->semaforo.jugador[i]);
+		sem_post(mapa->semaforo.jugador[i]);
 	} 
 	for(i = 0; i < mapa->numFantasmas; i++) {
-		sem_post(&mapa->semaforo.fantasma[i]);
+		sem_post(mapa->semaforo.fantasma[i]);
 	}
 }
