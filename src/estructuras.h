@@ -19,6 +19,14 @@ typedef struct semaforo {
 	sem_t ** fantasma;
 } SEMAFORO;
 
+typedef struct mapaAnt{
+int numFantasmas;
+int numJugadores;
+COORDENADA * fantasma;
+COORDENADA * jugador;
+}MAPAANT;
+
+
 typedef struct mapa {
 	char ** mapa;		    //Mapa sin jugadores ni fantasmas	
 	COORDENADA dimensiones; //Dimensiones del mapa

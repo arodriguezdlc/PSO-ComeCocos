@@ -60,8 +60,6 @@ void * hiloFantasma (void * pfantasma)  {
 	FANTASMA fant = { ((FANTASMA *) pfantasma)->id, ((FANTASMA *) pfantasma)->mapa, ((FANTASMA *) pfantasma)->sem }; 
 		
 	int cla = 0;
-	printf("IdFANTASMA = %d\n", fant.id);
-	sleep(1);
 	sem_post(fant.sem);
 	while(1) {		
 		sem_wait(fant.mapa->semaforo.fantasma[fant.id]);		
@@ -99,16 +97,14 @@ int creaHilos(MAPA * mapa, HILOS * hilos, MOVING * moving) {
 	} else {
 		jugador.sem = leeConfig;
 		for(i = 0; i < mapa->numJugadores; i++) {
-			jugador.id = i;
 			sem_wait(leeConfig);
+			jugador.id = i;
 			pthread_create(&(hilos->jugador[i]), NULL, hiloJugador,  &jugador);
 		}
 		fantasma.sem = leeConfig;
-		for(i = 0; i < mapa->numFantasmas; i++) {			
+		for(i = 0; i < mapa->numFantasmas; i++) {	
+			sem_wait(leeConfig);		
 			fantasma.id = i;
-			printf("id = %d\n",i);
-			sleep(1);
-			sem_wait(leeConfig);
 			pthread_create(&(hilos->fantasma[i]), NULL, hiloFantasma, &fantasma);
 		}
 		sem_wait(leeConfig);
