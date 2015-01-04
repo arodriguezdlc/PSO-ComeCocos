@@ -71,8 +71,9 @@ int main(int argc, char ** argv) {
 	} else {			
 			//TEMPORIZACION DEL PROGRAMA:			
 		imprimeMapa(mapa, TRUE);
-		//for (i = 0; i < MAX_IT; i++) {					
-		while(choque(&mapa)==0)
+		for (i = 0; i < MAX_IT; i++) {					
+		//while(choque(&mapa,)==0)
+		//{
 			mapant=mapa;
 			subirSemaforos(&mapa);
 			sleep(1);						
