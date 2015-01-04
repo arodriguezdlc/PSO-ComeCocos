@@ -73,7 +73,7 @@ int main(int argc, char ** argv) {
 		imprimeMapa(mapa, TRUE);
 		//for (i = 0; i < MAX_IT; i++) {					
 		while(choque(&mapa)==0)
-			mapaant=mapa;
+			mapant=mapa;
 			subirSemaforos(&mapa);
 			sleep(1);						
 			imprimeMapa(mapa, FALSE);				
