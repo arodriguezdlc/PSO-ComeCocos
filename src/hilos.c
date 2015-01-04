@@ -57,14 +57,10 @@ void * hiloJugador (void * pjugador) {
 *	Return: nada
 */
 void * hiloFantasma (void * pfantasma)  {
-<<<<<<< HEAD
+
 	FANTASMA fant = { ((FANTASMA *) pfantasma)->id, ((FANTASMA *) pfantasma)->mapa, ((FANTASMA *) pfantasma)->sem }; 		
 	int cla = 0;	
-=======
-	FANTASMA fant = { ((FANTASMA *) pfantasma)->id, ((FANTASMA *) pfantasma)->mapa, ((FANTASMA *) pfantasma)->sem }; 
-		
-	int cla = 0;
->>>>>>> 38ad19fe18bf630ac8cd2ffd39ef2687c96dc3ea
+
 	sem_post(fant.sem);
 	while(1) {		
 		sem_wait(fant.mapa->semaforo.fantasma[fant.id]);		
