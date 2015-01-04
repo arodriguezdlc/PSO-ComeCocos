@@ -16,6 +16,7 @@
 #include "hilos.h"
 #include "imprimeMapa.h"
 #include "keyboard.h"
+#include "choque.h"
 
 #define NUMARGS			1
 #define MAX_IT			3000
