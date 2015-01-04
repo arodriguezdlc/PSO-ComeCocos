@@ -72,8 +72,8 @@ int main(int argc, char ** argv) {
 
 		
 			//TEMPORIZACION DEL PROGRAMA:			
-		imprimeMapa(mapa, TRUE);
-		creaHilosKb(&moving);
+		imprimeMapa(mapa, TRUE);		
+		//creaHilosKb(&moving);
 
 		for (i = 0; i < MAX_IT; i++) {					
 			subirSemaforos(&mapa);

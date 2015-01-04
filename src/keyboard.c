@@ -14,7 +14,7 @@ void * caracter(void * car){
 	while(1){
 		noecho();
 		mover->movin=getch();
-		printf("%c\n",mover->movin);
+		//printf("%c\n",mover->movin);
 	}
 	pthread_exit(NULL);
 }
