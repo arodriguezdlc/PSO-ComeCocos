@@ -14,10 +14,6 @@ void controles(char * right, char * left, char * up, char * down, char controles
 *down = controlesj1[3];
 }
 
-
-
-
-
 void jugador (MAPA * mapa, int cambiocontroles, char controlesj1[4], int j, char mov){
 
 char right = 'd';
@@ -32,7 +28,7 @@ int dir= 0;//vble para el switch
 if(cambiocontroles != 0)
 	controles(&right, &left, &up, &down, &controlesj1[4]);//si se han cambiado los controles del jugador uno, sustituye los que vienen por defecto
 
-noecho();
+//noecho();
 //cbreak();
 //nodelay(stdscr,TRUE);
 //mov = getch();

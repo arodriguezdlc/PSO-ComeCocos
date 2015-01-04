@@ -68,11 +68,10 @@ int main(int argc, char ** argv) {
 		printf("Error en creaSemaforos\n");
 	} else if (creaHilos(&mapa, &hilos, &moving)) {			
 		printf("Error en creaHilos\n");
-	} else {			
-
-		
-			//TEMPORIZACION DEL PROGRAMA:			
+	} else {		
+		//TEMPORIZACION DEL PROGRAMA:			
 		imprimeMapa(mapa, TRUE);
+		mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", 0);
 		creaHilosKb(&moving);
 
 		for (i = 0; i < MAX_IT; i++) {					
