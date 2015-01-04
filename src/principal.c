@@ -56,6 +56,7 @@ int main(int argc, char ** argv) {
 		aux[i] = cuadrado[i];
 	}
 	HILOS hilos;
+	int n = 1000000;
 	MOVING moving; 
 	COORDENADA jugadores[NUMJUGADORES] = {{1,1}};
 	COORDENADA fantasmas[NUMFANTASMAS] = {{7,6}, {9,6}, {11,6}};
@@ -79,7 +80,7 @@ int main(int argc, char ** argv) {
 		creaHilosKb(&moving);
 
 		for (i = 0; i < MAX_IT;i++) {							
-			sleep(1);
+			usleep(n);
 			guardamapa(&mapa, &mapaAnt);
 			subirSemaforos(&mapa);			
 			imprimeMapa(mapa, FALSE);				
@@ -88,6 +89,10 @@ int main(int argc, char ** argv) {
 			refresh();
 			if(TRUE == choque(&mapa, &mapaAnt, mapa.numFantasmas, mapa.numJugadores))
 				i = MAX_IT;
+			if(i>=20){
+				n=n/2;
+				i=0;
+				}
 		}
 		liberaHilos(&hilos);
 	}		
