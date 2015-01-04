@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <semaphore.h>
+
 #include "estructuras.h"
 
 #define NO 0
