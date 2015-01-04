@@ -60,7 +60,9 @@ int main(int argc, char ** argv) {
 	COORDENADA jugadores[NUMJUGADORES] = {{1,1}};
 	COORDENADA fantasmas[NUMFANTASMAS] = {{7,6}, {9,6}, {11,6}};
 	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, fantasmas, jugadores, {0, 0} } ;
-	MAPAANT mapaAnt;
+	COORDENADA jugadoresAnt[NUMJUGADORES] = {{0,0}};
+	COORDENADA fantasmasAnt[NUMFANTASMAS] = {{0,0}, {0,0}, {0,0}};
+	MAPAANT mapaAnt = { 0, 0, fantasmasAnt, jugadoresAnt};
 
 	//Comprobamos numero de argumentos
 	if (argc != NUMARGS) {		
