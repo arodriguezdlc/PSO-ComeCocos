@@ -1,0 +1,1 @@
+int choque(MAPA * mapa, COORDENADA anterior);
