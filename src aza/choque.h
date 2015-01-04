@@ -1,1 +1,1 @@
-int choque(MAPA * mapa, COORDENADA anterior);
+int choque(MAPA * mapa, MAPA * mapant);
