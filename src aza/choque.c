@@ -10,7 +10,7 @@
 #define SI 1
 
 
-int choque(MAPA * mapa, COORDENADA anterior){//funcion para ver si chocan el jugador y el fantasma
+int choque(MAPA * mapa, COORDENADA anterior, int i, int j){//funcion para ver si chocan el jugador y el fantasma
 
 int resultado = NO;
 
