@@ -27,7 +27,8 @@ void * hiloJugador (void * pjugador) {
 						  	((JUGADOR *) pjugador)->controles.derecha,
 						  	((JUGADOR *) pjugador)->controles.izquierda,
 						},  
-						((JUGADOR *) pjugador)->mapa };
+						((JUGADOR *) pjugador)->mapa,
+						((JUGADOR *) pjugador)->moving };
 
 	char  tablaControles[4] = 	{ 	jug.controles.derecha, 
 									jug.controles.izquierda,
@@ -41,7 +42,7 @@ void * hiloJugador (void * pjugador) {
 	
 	while(1) {						
 		sem_wait(jug.mapa->semaforo.jugador[jug.id]);
-		jugador(jug.mapa, 1, tablaControles, jug.id);			
+		jugador(jug.mapa, 1, tablaControles, jug.id, jug.moving->movin);			
 	}
 	pthread_exit(NULL);
 }
@@ -71,12 +72,12 @@ void * hiloFantasma (void * pfantasma)  {
 *	Return: si ha habido error de memoria devuelve TRUE, en caso contrario
 *		devuelve FALSE
 */
-int creaHilos(MAPA * mapa, HILOS * hilos) {
+int creaHilos(MAPA * mapa, HILOS * hilos, MOVING * moving) {
 
 	int i;	
 	int error = FALSE;
 	JUGADOR * pjugador = NULL;
-	JUGADOR jugador = {0, {'w', 's', 'd', 'a'}, mapa};
+	JUGADOR jugador = {0, {'w', 's', 'd', 'a'}, mapa, moving};
 	FANTASMA * pfantasma = NULL;
 	FANTASMA fantasma = {0, mapa};
 

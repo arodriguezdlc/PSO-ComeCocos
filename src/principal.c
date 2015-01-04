@@ -55,7 +55,7 @@ int main(int argc, char ** argv) {
 		aux[i] = cuadrado[i];
 	}
 	HILOS hilos;
-	struct moving a; 
+	MOVING moving; 
 	COORDENADA jugadores[NUMJUGADORES] = {{1,1}};
 	COORDENADA fantasmas[NUMFANTASMAS] = {{7,6}, {9,6}, {11,6}};
 	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, fantasmas, jugadores, {0, 0} } ;
@@ -66,11 +66,11 @@ int main(int argc, char ** argv) {
 		printf("%s: Numero de argumentos incorrecto\n", argv[0]);
 	} else if (creaSemaforos(&mapa)) {			
 		printf("Error en creaSemaforos\n");
-	} else if (creaHilos(&mapa, &hilos)) {			
+	} else if (creaHilos(&mapa, &hilos, &moving)) {			
 		printf("Error en creaHilos\n");
 	} else {			
 
-		creaHilosKb(&a);
+		creaHilosKb(&moving);
 			//TEMPORIZACION DEL PROGRAMA:			
 		imprimeMapa(mapa, TRUE);
 
