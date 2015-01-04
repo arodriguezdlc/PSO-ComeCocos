@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include <unistd.h>
+#include <semaphore.h>
+#include <pthread.h>
 #include "estructuras.h"
 #include "fantasma.h"
 #include "jugador.h"
@@ -43,7 +45,7 @@ int main() {
 	COORDENADA fantasmas[NUMFANTASMAS] = {{7,6}, {9,6}, {11,6}};
 	
 
-	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, fantasmas, jugadores } ;
+	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, fantasmas, jugadores, {NULL, NULL } };
 
 	imprimeMapa(mapa, true);	
 	while(gameover==0) {

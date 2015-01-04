@@ -117,8 +117,7 @@ while(ok==0)
 				while(mov==3);
 			}
 		}
-	} 
-	mvprintw(mapa->dimensiones.y + 5,0, "mov = %d", mov);
+	} 	
 }
 
 
