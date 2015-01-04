@@ -2,4 +2,4 @@
 
 void * caracter(void * car);
 
-void creaHilosKb(struct moving * a);
+void creaHilosKb(MOVING * a);

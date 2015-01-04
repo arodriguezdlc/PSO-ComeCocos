@@ -70,9 +70,10 @@ int main(int argc, char ** argv) {
 		printf("Error en creaHilos\n");
 	} else {			
 
-		creaHilosKb(&moving);
+		
 			//TEMPORIZACION DEL PROGRAMA:			
 		imprimeMapa(mapa, TRUE);
+		creaHilosKb(&moving);
 
 		for (i = 0; i < MAX_IT; i++) {					
 			subirSemaforos(&mapa);

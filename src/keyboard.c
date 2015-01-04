@@ -19,7 +19,7 @@ void * caracter(void * car){
 	pthread_exit(NULL);
 }
 
-void creaHilosKb(struct moving * a){
+void creaHilosKb(MOVING * a){
 
 //puts("1");
 	pthread_attr_init(&a->attr);
