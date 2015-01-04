@@ -70,11 +70,6 @@ int main(int argc, char ** argv) {
 		printf("Error en creaHilos\n");
 	} else {		
 		//TEMPORIZACION DEL PROGRAMA:			
-		imprimeMapa(mapa, TRUE);		
-		//creaHilosKb(&moving);
-
-	} else {		
-		//TEMPORIZACION DEL PROGRAMA:			
 		imprimeMapa(mapa, TRUE);
 		mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", 0);
 		creaHilosKb(&moving);
