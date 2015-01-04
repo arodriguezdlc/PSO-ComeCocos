@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include "estructuras.h"
-#include "semaforos.h"
+#include "jugador.h"
 
 void controles(char * right, char * left, char * up, char * down, char controlesj1[4]){
 
@@ -14,27 +14,25 @@ void controles(char * right, char * left, char * up, char * down, char controles
 *down = controlesj1[3];
 }
 
-void jugador (MAPA * mapa, int cambiocontroles, char controlesj1[4], int j, char mov){
+
+
+void jugador (MAPA * mapa, int cambiocontroles, char controlesj1[4], int j, MAPA * mapant){
 
 char right = 'd';
 char left = 'a';
 char up = 'w';
 char down = 's';
-//char mov;//vble para guardar el caracter pulsado
+char mov;//vble para guardar el caracter pulsado
 int dir= 0;//vble para el switch
-
-
 
 if(cambiocontroles != 0)
 	controles(&right, &left, &up, &down, &controlesj1[4]);//si se han cambiado los controles del jugador uno, sustituye los que vienen por defecto
 
-//noecho();
+noecho();
 //cbreak();
-//nodelay(stdscr,TRUE);
-//mov = getch();
-//flushinp();//vaciar buffer del teclado
-
-
+nodelay(stdscr,TRUE);
+mov = getch();
+flushinp();//vaciar buffer del teclado
 
 if(mov==right) dir = 1;
 else if (mov == left) dir = 2;
@@ -42,15 +40,31 @@ else if (mov == up) dir = 3;
 else if (mov == down) dir = 4;
 
 switch(dir){
-	case(1):if(mapa->mapa[mapa->jugador[j].y][mapa->jugador[j].x+1]==' ') (mapa->jugador[j].x)+=1;
-	break;
-	case(2):if(mapa->mapa[mapa->jugador[j].y][mapa->jugador[j].x-1]==' ') (mapa->jugador[j].x)-=1;
-	break;
-	case(3):if(mapa->mapa[mapa->jugador[j].y-1][mapa->jugador[j].x]==' ') (mapa->jugador[j].y)-=1;
-	break;
-	case(4):if(mapa->mapa[mapa->jugador[j].y+1][mapa->jugador[j].x]==' ') (mapa->jugador[j].y)+=1;
-	break;
+	case(1):if(mapa->mapa[mapa->jugador[j].y][mapa->jugador[j].x+1]==' ')
+	{
+	  (mapant->jugador[j].x)=(mapa->jugador[j].x);
+	  (mapa->jugador[j].x)+=1;
 	}
+	break;
+	case(2):if(mapa->mapa[mapa->jugador[j].y][mapa->jugador[j].x-1]==' ')
+	{
+	  (mapant->jugador[j].x)=(mapa->jugador[j].x);
+	  (mapa->jugador[j].x)-=1;
+	}
+	break;
+	case(3):if(mapa->mapa[mapa->jugador[j].y-1][mapa->jugador[j].x]==' ')
+	{
+	  (mapant->jugador[j].y)=(mapa->jugador[j].y);
+	  (mapa->jugador[j].y)-=1;
+	}
+	break;
+	case(4):if(mapa->mapa[mapa->jugador[j].y+1][mapa->jugador[j].x]==' ')
+	{
+	  (mapant->jugador[j].y)=(mapa->jugador[j].y);
+	  (mapa->jugador[j].y)+=1;
+	}
+	break;
+    }
 }
 
 

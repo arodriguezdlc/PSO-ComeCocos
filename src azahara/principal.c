@@ -5,6 +5,7 @@
 /*	Librerias  */
 #include <stdio.h>
 #include <ncurses.h>
+#include <curses.h>
 #include <pthread.h>
 #include <semaphore.h>
 #include <unistd.h>
@@ -15,7 +16,7 @@
 #include "semaforos.h"
 #include "hilos.h"
 #include "imprimeMapa.h"
-#include "keyboard.h"
+#include "choque.h"
 
 #define NUMARGS			1
 #define MAX_IT			3000
@@ -54,37 +55,29 @@ int main(int argc, char ** argv) {
 	for(i = 0; i < DIMY; i++) {
 		aux[i] = cuadrado[i];
 	}
-	HILOS hilos;
-	MOVING moving; 
+	HILOS hilos; 
 	COORDENADA jugadores[NUMJUGADORES] = {{1,1}};
 	COORDENADA fantasmas[NUMFANTASMAS] = {{7,6}, {9,6}, {11,6}};
 	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, fantasmas, jugadores, {0, 0} } ;
-	
+	MAPA mapant=mapa;
 	//Comprobamos numero de argumentos
 	if (argc != NUMARGS) {		
 		//error(1);
 		printf("%s: Numero de argumentos incorrecto\n", argv[0]);
 	} else if (creaSemaforos(&mapa)) {			
 		printf("Error en creaSemaforos\n");
-	} else if (creaHilos(&mapa, &hilos, &moving)) {			
+	} else if (creaHilos(&mapa, &hilos)) {			
 		printf("Error en creaHilos\n");
-	} else {		
-		//TEMPORIZACION DEL PROGRAMA:			
-		imprimeMapa(mapa, TRUE);		
-		//creaHilosKb(&moving);
-
-	} else {		
-		//TEMPORIZACION DEL PROGRAMA:			
+	} else {			
+			//TEMPORIZACION DEL PROGRAMA:			
 		imprimeMapa(mapa, TRUE);
-		mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", 0);
-		creaHilosKb(&moving);
-
-		for (i = 0; i < MAX_IT; i++) {							
-			sleep(1);
-			subirSemaforos(&mapa);								
+		//for (i = 0; i < MAX_IT; i++) {					
+		while(choque(&mapa)==0)
+			mapant=mapa;
+			subirSemaforos(&mapa);
+			sleep(1);						
 			imprimeMapa(mapa, FALSE);				
 			mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones);
-			refresh();
 		}
 		liberaHilos(&hilos);
 	}		

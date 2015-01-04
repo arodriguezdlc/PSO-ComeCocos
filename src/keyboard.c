@@ -11,8 +11,9 @@ void * caracter(void * car){
 //puts("4");
 	mover=(struct moving *)car;
 //puts("5");
+	noecho();
 	while(1){
-		noecho();
+			
 		mover->movin=getch();
 		//printf("%c\n",mover->movin);
 	}

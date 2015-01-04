@@ -38,11 +38,10 @@ void * hiloJugador (void * pjugador) {
 
 	//sigset_t set;	
 	//int sig;	
-	//manejaSenial(&set); 
-	
+	//manejaSenial(&set); 		
 	while(1) {						
 		sem_wait(jug.mapa->semaforo.jugador[jug.id]);
-		jugador(jug.mapa, 1, tablaControles, jug.id, jug.moving->movin);			
+		jugador(jug.mapa, 0, tablaControles, jug.id, jug.moving->movin);			
 	}
 	pthread_exit(NULL);
 }
