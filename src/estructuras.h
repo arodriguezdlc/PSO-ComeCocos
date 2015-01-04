@@ -49,12 +49,14 @@ typedef struct jugador {
 	CONTROLES controles;
 	MAPA * mapa;
 	MOVING * moving;
+	sem_t * sem;
 } JUGADOR; 
 
 //	Estructura de parametros que se le pasa al hilo del fantasma
 typedef struct fantasma {
 	unsigned int id;
 	MAPA * mapa;
+	sem_t * sem;
 } FANTASMA; 
 
 //	Estructura donde almacenar los identificadores de los hilos de jugadores y fantasmas.

@@ -33,20 +33,3 @@ void enviaSenial(MAPA mapa, HILOS hilos);
 */
 void manejaSenial(sigset_t * set);
 
-/*
-*	Funcion dupStructJug
-*	Descripcion: duplica una estructura JUGADOR en otra, realizando la asignacion
-*	de cada parametro.
-*	Parametros: estructura JUGADOR de origen y puntero a estructura JUGADOR destino.
-*	Return: nada.
-*/
-void dupStructJug(JUGADOR origen, JUGADOR * destino);
-
-/*
-*	Funcion dupStructFant
-*	Descripcion: duplica una estructura FANTASMA en otra, realizando la asignacion
-*	de cada parametro.
-*	Parametros: estructura FANTASMA de origen y puntero a estructura FANTASMA destino.
-*	Return: nada.
-*/
-void dupStructFant(FANTASMA origen, FANTASMA * destino);

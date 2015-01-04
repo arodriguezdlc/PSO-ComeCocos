@@ -55,16 +55,16 @@ void eliminaSemaforos(MAPA * mapa, int primeraVez) {
 	char nombreSemaforoJug[] = "ComeCocosJug-0";
 	char nombreSemaforoFant[] = "ComeCocosFant-0";
 	for(i = 0; i < mapa->numJugadores; i++) {
-		//if(primeraVez == FALSE) {
+		if(primeraVez == FALSE) {
 			sem_close(mapa->semaforo.jugador[i]);
-		//}
+		}
 		sem_unlink(nombreSemaforoJug);
 		nombreSemaforoJug[13]++;
 	}	
 	for(i = 0; i < mapa->numFantasmas; i++) {
 		if(primeraVez == FALSE) {
 			sem_close(mapa->semaforo.fantasma[i]);
-		//}
+		}
 		sem_unlink(nombreSemaforoFant);
 		nombreSemaforoFant[14]++;
 	}
