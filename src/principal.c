@@ -71,7 +71,7 @@ int main(int argc, char ** argv) {
 		imprimeMapa(mapa, TRUE);
 		for (i = 0; i < MAX_IT; i++) {					
 			subirSemaforos(&mapa);
-			sleep(1);						
+			sleep(1);								
 			imprimeMapa(mapa, FALSE);				
 			mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones);
 		}

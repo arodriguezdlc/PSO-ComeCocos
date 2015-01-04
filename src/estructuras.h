@@ -54,4 +54,5 @@ typedef struct fantasma {
 typedef struct hilos {
 	pthread_t * fantasma;	//Puntero a tabla de identificadores de fantasmas
 	pthread_t * jugador;	//Puntero a tabla de identificadores de jugadores
+	pthread_t control;		//Identificador de hilo de control
 } HILOS;

@@ -97,17 +97,15 @@ int main(void) {
 
 	endwin();
 	puts("\n\n\n\n\t\t\tgame over\n\n\n\n");
-	printf("car %c num %d\n", a.movin, a.movin);
-  	 pthread_attr_destroy(&attr);
+	
+    pthread_attr_destroy(&attr);
 	return 0;
 }
 void * caracter(void * car){
 	struct moving *mover;
 	//char * car2;
 	//car2=(char *)car;
-
 	mover=(struct moving *)car;
-
 	while(1){
 		//*car2 = getch();
 		noecho();
