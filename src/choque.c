@@ -16,6 +16,8 @@ while(j>0){
 	while (i>0){
 		if(((mapa->jugador[j].x)==(mapa->fantasma[i].x))&&((mapa->jugador[j].y)==(mapa->fantasma[i].y)))
 		resultado=SI;
+		if(((mapaAnt->jugador[j].x)==(mapa->fantasma[i].x))&&((mapaAnt->jugador[j].y)==(mapa->fantasma[i].y)))
+		resultado=SI;
 		i--;
 		}
 	j--;
