@@ -152,6 +152,7 @@ void dupStructJug(JUGADOR origen, JUGADOR * destino) {
 	destino->controles.derecha = origen.controles.derecha;
 	destino->controles.izquierda = origen.controles.izquierda;
 	destino->mapa = origen.mapa;
+	destino->moving = origen.moving;
 }
 
 /*
