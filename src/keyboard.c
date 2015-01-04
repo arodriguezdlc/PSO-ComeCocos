@@ -13,7 +13,7 @@ void * caracter(void * car){
 //puts("5");
 	noecho();
 	while(1){
-		
+			
 		mover->movin=getch();
 		//printf("%c\n",mover->movin);
 	}

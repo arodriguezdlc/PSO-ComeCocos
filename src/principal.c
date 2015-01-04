@@ -74,9 +74,9 @@ int main(int argc, char ** argv) {
 		mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", 0);
 		creaHilosKb(&moving);
 
-		for (i = 0; i < MAX_IT; i++) {					
-			subirSemaforos(&mapa);
-			sleep(1);								
+		for (i = 0; i < MAX_IT; i++) {							
+			sleep(1);
+			subirSemaforos(&mapa);								
 			imprimeMapa(mapa, FALSE);				
 			mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones);
 			refresh();
