@@ -128,7 +128,13 @@ int creaHilos(MAPA * mapa, HILOS * hilos, MOVING * moving) {
 *	Return: nada
 */
 void liberaHilos(HILOS * hilos, MAPA * mapa) {
-	int i;
+	int i;	
+	for(i = 0; i < mapa->numJugadores; i++) {
+		pthread_join(hilos->jugador[i], NULL);
+	}
+	for(i = 0; i < mapa->numFantasmas; i++) {
+		pthread_join(hilos->fantasma[i], NULL);
+	}
 	if(NULL != hilos->jugador) {
 		free(hilos->jugador);
 		hilos->jugador = NULL;
@@ -136,12 +142,6 @@ void liberaHilos(HILOS * hilos, MAPA * mapa) {
 	if(NULL != hilos->fantasma) {
 		free(hilos->fantasma);
 		hilos->fantasma = NULL; 
-	}
-	for(i = 0; i < mapa->numJugadores; i++) {
-		pthread_join(hilos->jugador[i], NULL);
-	}
-	for(i = 0; i < mapa->numFantasmas; i++) {
-		pthread_join(hilos->fantasma[i], NULL);
 	}
 }
 
