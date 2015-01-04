@@ -14,22 +14,7 @@ int creaHilos(MAPA * mapa, HILOS * hilos, MOVING * moving);
 *	Parametros: HILOS (puntero)
 *	Return: nada
 */
-void liberaHilos(HILOS * hilos);
+void liberaHilos(HILOS * hilos, MAPA * mapa);
 
-/*
-*	Funcion enviaSenial
-*	Descripcion: envia una senial a todos los hilos creados por la funcion creaHilos
-*	Parametros: estructura MAPA y estructura HILOS, habiendose llamado anteriormente 
-*		a la funcion creaHilos.
-*	Return: nada
-*/
-void enviaSenial(MAPA mapa, HILOS hilos);
 
-/*
-*	Funcion manejaSenial
-*	Descripcion: configura la captura de las seniales en los hilos.
-*	Parametros: sigset_t * set
-*	Return: nada
-*/
-void manejaSenial(sigset_t * set);
 

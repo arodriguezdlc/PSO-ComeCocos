@@ -115,7 +115,7 @@ int creaHilos(MAPA * mapa, HILOS * hilos, MOVING * moving) {
 	sem_unlink("ComeCocos-LeeConfig");
 
 	if(error == TRUE) {
-		liberaHilos(hilos);
+		liberaHilos(hilos, mapa);
 	}	
 	return error;
 }
@@ -127,8 +127,8 @@ int creaHilos(MAPA * mapa, HILOS * hilos, MOVING * moving) {
 *	Parametros: HILOS (puntero)
 *	Return: nada
 */
-void liberaHilos(HILOS * hilos) {
-	
+void liberaHilos(HILOS * hilos, MAPA * mapa) {
+	int i;
 	if(NULL != hilos->jugador) {
 		free(hilos->jugador);
 		hilos->jugador = NULL;
@@ -136,6 +136,12 @@ void liberaHilos(HILOS * hilos) {
 	if(NULL != hilos->fantasma) {
 		free(hilos->fantasma);
 		hilos->fantasma = NULL; 
+	}
+	for(i = 0; i < mapa->numJugadores; i++) {
+		pthread_join(hilos->jugador[i], NULL);
+	}
+	for(i = 0; i < mapa->numFantasmas; i++) {
+		pthread_join(hilos->fantasma[i], NULL);
 	}
 }
 
