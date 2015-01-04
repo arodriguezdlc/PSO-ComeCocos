@@ -5,7 +5,7 @@
 *	Return: si ha habido error de memoria devuelve TRUE, en caso contrario
 *		devuelve FALSE
 */
-int creaHilos(MAPA * mapa, HILOS * hilos);
+int creaHilos(MAPA * mapa, HILOS * hilos, MOVING * moving);
 
 /*
 *	Funcion liberaHilos

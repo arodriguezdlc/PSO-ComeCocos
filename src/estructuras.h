@@ -37,11 +37,18 @@ typedef struct controles {
 	char izquierda;	//Tecla asignada a izquierda
 } CONTROLES; 
 
+typedef struct moving{
+	char movin;
+	pthread_t th1;
+	pthread_attr_t attr;
+} MOVING;
+
 //	Estructura de parametros que se le pasa al hilo del jugador
 typedef struct jugador {
 	unsigned int id;
 	CONTROLES controles;
 	MAPA * mapa;
+	MOVING * moving;
 } JUGADOR; 
 
 //	Estructura de parametros que se le pasa al hilo del fantasma
@@ -54,5 +61,5 @@ typedef struct fantasma {
 typedef struct hilos {
 	pthread_t * fantasma;	//Puntero a tabla de identificadores de fantasmas
 	pthread_t * jugador;	//Puntero a tabla de identificadores de jugadores
-	pthread_t control;		//Identificador de hilo de control
+	pthread_t keyboard;		//Identificador de hilo de control
 } HILOS;
