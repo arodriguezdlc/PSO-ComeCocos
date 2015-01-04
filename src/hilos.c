@@ -129,14 +129,22 @@ int creaHilos(MAPA * mapa, HILOS * hilos, MOVING * moving) {
 */
 void liberaHilos(HILOS * hilos, MAPA * mapa) {
 	int i;	
+<<<<<<< HEAD
 	/*
 	for(i = 0; i < mapa->numJugadores; i++) {
+=======
+	/*for(i = 0; i < mapa->numJugadores; i++) {
+>>>>>>> 13e5a73b197c59d6d7a9a18112c531433b39cbdb
 		pthread_join(hilos->jugador[i], NULL);
 	}
 	for(i = 0; i < mapa->numFantasmas; i++) {
 		pthread_join(hilos->fantasma[i], NULL);
+<<<<<<< HEAD
 	}
 	*/
+=======
+	}*/
+>>>>>>> 13e5a73b197c59d6d7a9a18112c531433b39cbdb
 	if(NULL != hilos->jugador) {
 		free(hilos->jugador);
 		hilos->jugador = NULL;
