@@ -89,7 +89,7 @@ int main(int argc, char ** argv) {
 			if(TRUE == choque(&mapa, &mapaAnt, mapa.numFantasmas, mapa.numJugadores))
 				i = MAX_IT;
 		}
-		liberaHilos(&hilos, &mapa);
+		liberaHilos(&hilos);
 	}		
 	endwin();		
 	eliminaSemaforos(&mapa, FALSE);

@@ -14,7 +14,7 @@ int creaHilos(MAPA * mapa, HILOS * hilos, MOVING * moving);
 *	Parametros: HILOS (puntero)
 *	Return: nada
 */
-void liberaHilos(HILOS * hilos, MAPA * mapa);
+void liberaHilos(HILOS * hilos);
 
 
 
