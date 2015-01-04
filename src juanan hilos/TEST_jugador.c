@@ -49,14 +49,14 @@ int main(void) {
 	int cla2 = 0;
 	int cla3 = 0;
 	int gameover=0;//para ver si choca
-	char mov = 'd';
+	//char mov = 'd';
 	struct moving a;
 	pthread_t th1;
 	pthread_attr_t attr;
 
 	pthread_attr_init(&attr);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-	pthread_create(&th1, &attr, caracter, (void *)&a);
+	
 
 	for(i = 0; i < DIMY; i++) {
 		aux[i] = cuadrado[i];
@@ -66,9 +66,10 @@ int main(void) {
 	COORDENADA fantasmas[NUMFANTASMAS] = {{7,6}, {9,6}, {11,6}};
 	
 
-	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, fantasmas, jugadores } ;
+	MAPA mapa = { (char **) &aux, {DIMX, DIMY}, NUMFANTASMAS, NUMJUGADORES, fantasmas, jugadores, {0,0} } ;
 
-	imprimeMapa(mapa, true);	
+	imprimeMapa(mapa, true);
+	pthread_create(&th1, &attr, caracter, (void *)&a);	
 	while(gameover==0) {
 		
 		jugador(&mapa, 0, NULL, 0, a.movin);
@@ -109,6 +110,7 @@ void * caracter(void * car){
 
 	while(1){
 		//*car2 = getch();
+		noecho();
 		mover->movin=getch();
 	}
 	pthread_exit(NULL);

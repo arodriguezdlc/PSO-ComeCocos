@@ -1,7 +1,7 @@
 
 
-a.out: TEST_jugador.o imprimeMapa.o jugador.o fantasma.o choque.o
-	gcc -g -W -Wall TEST_jugador.o imprimeMapa.o jugador.o fantasma.o choque.o -lncurses
+a.out: TEST_jugador.o imprimeMapa.o jugador.o fantasma.o choque.o 
+	gcc -g -W -Wall -pthread TEST_jugador.o imprimeMapa.o jugador.o fantasma.o choque.o -lncurses
 
 hilos: imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o 
 	gcc -g -W -Wall -pthread imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o -lncurses 

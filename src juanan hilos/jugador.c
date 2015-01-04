@@ -34,7 +34,7 @@ if(cambiocontroles != 0)
 
 noecho();
 //cbreak();
-nodelay(stdscr,TRUE);
+//nodelay(stdscr,TRUE);
 //mov = getch();
 //flushinp();//vaciar buffer del teclado
 
