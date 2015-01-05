@@ -86,7 +86,7 @@ int main(int argc, char ** argv) {
 			imprimeMapa(mapa, FALSE);				
 			mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones);
 			if(i>=20){
-				n--;
+				n=n/2;
 				i=0;
 				}
 			refresh();
