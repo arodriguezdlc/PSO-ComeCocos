@@ -19,7 +19,7 @@
 #include "choque.h"
 
 #define NUMARGS			1
-#define MAX_IT			3000
+#define MAX_IT			100
 
 #define DIMY 			12
 #define DIMX 			20
@@ -57,6 +57,7 @@ int main(int argc, char ** argv) {
 	}
 	HILOS hilos;
 	int n = 1000000;
+	int salir = FALSE;
 	MOVING moving; 
 	COORDENADA jugadores[NUMJUGADORES] = {{1,1}};
 	COORDENADA fantasmas[NUMFANTASMAS] = {{7,6}, {9,6}, {11,6}};
@@ -79,7 +80,7 @@ int main(int argc, char ** argv) {
 		mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", 0);
 		creaHilosKb(&moving);
 
-		for (i = 0; i < MAX_IT;i++) {							
+		for (i = 0; salir == FALSE && i < MAX_IT ;i++) {							
 			usleep(n);
 			guardamapa(&mapa, &mapaAnt);
 			subirSemaforos(&mapa);			
@@ -90,14 +91,18 @@ int main(int argc, char ** argv) {
 				i=0;
 				}
 			refresh();
-			if(TRUE == choque(&mapa, &mapaAnt, mapa.numFantasmas, mapa.numJugadores))
-				i = MAX_IT;
+			if(TRUE == choque(&mapa, &mapaAnt, mapa.numFantasmas, mapa.numJugadores)) {
+				salir = TRUE;
+			}
 
 		}
 		liberaHilos(&hilos);
 	}		
 	endwin();		
 	eliminaSemaforos(&mapa, FALSE);
-	
+	printf("Usted ha durado %d interacciones\n", i);
+	if(i == MAX_IT) {
+		printf("HA GANADO!!!\n");
+	}
 	return 0;
 }
