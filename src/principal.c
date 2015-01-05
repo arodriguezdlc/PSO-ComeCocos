@@ -85,11 +85,13 @@ int main(int argc, char ** argv) {
 			subirSemaforos(&mapa);			
 			imprimeMapa(mapa, FALSE);				
 			mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones);
-
+			if(i>=20){
+				n--;
+				i=0;
+				}
 			refresh();
 			if(TRUE == choque(&mapa, &mapaAnt, mapa.numFantasmas, mapa.numJugadores))
 				i = MAX_IT;
-				n--;
 
 		}
 		liberaHilos(&hilos);
