@@ -51,7 +51,7 @@ int main(int argc, char ** argv) {
 		"###################"
 	};
 	char * aux[DIMY];
-	int i;
+	int i;	
 	for(i = 0; i < DIMY; i++) {
 		aux[i] = cuadrado[i];
 	}
@@ -80,7 +80,7 @@ int main(int argc, char ** argv) {
 		mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", 0);
 		creaHilosKb(&moving);
 
-		for (i = 0; salir == FALSE && i < MAX_IT ;i++) {							
+		for (i = 0; salir == FALSE && numInteracciones < MAX_IT ;i++) {							
 			usleep(n);
 			guardamapa(&mapa, &mapaAnt);
 			subirSemaforos(&mapa);			
@@ -100,8 +100,8 @@ int main(int argc, char ** argv) {
 	}		
 	endwin();		
 	eliminaSemaforos(&mapa, FALSE);
-	printf("Usted ha durado %d interacciones\n", i);
-	if(i == MAX_IT) {
+	printf("Usted ha durado %d interacciones\n", numInteracciones);
+	if(numInteracciones == MAX_IT) {
 		printf("HA GANADO!!!\n");
 	}
 	return 0;
