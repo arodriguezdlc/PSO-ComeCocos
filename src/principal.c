@@ -89,10 +89,8 @@ int main(int argc, char ** argv) {
 			refresh();
 			if(TRUE == choque(&mapa, &mapaAnt, mapa.numFantasmas, mapa.numJugadores))
 				i = MAX_IT;
-			if(i>=20){
-				n=n/2;
-				i=0;
-				}
+				n--;
+
 		}
 		liberaHilos(&hilos);
 	}		
