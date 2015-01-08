@@ -1,0 +1,226 @@
+Componentes:
+ Juan Antonio Piñero Perez
+ Azahara María Porras Tejada
+ Alberto Rodríguez de la Cruz
+ Francisco Javier Rodríguez López
+Tema:
+Comecocos (Pac-Man)
+Este Programa consta de los siguientes archivos , los cuales compilamos con el MAKE y en los cuales se basa el ComeCocos para funcionar.
+ 
+semaforos.c  		-->	Funciones para el amnejo de los semáforos.
+principal.c 		-->	Método principal del programa.
+hilos.c			-->	Funciones para la creación y manejo de los hilos.
+fantasma.c 		-->	Lógica de funcionamiento de los fantasmas del ComeCocos.
+jugador.c 		-->	Lógica de funcionamiento del jugador del ComeCocos.
+keyboard.c 		-->	Función para capturar las pulsaciones del teclado.
+choque.c 		-->	Funciones del choque entre fasntasmas y jugador.
+imprimeMapa.c	-->	Imprime el mapa del ComeCocos
+estructura.h		-->	Archivo de cabecera donde están las estructuras usadas por
+los hilos, por los MAPAS etc…
+
+A continuación desarrollaremos las ideas principales de los archivos que constituyen el programa, así como un seguimiento por sus funciones y por las partes de estas.
+
+jugador.c
+
+La parte de jugador.c consta de dos funciones.
+Este archivo contiene la lógica del jugador y del movimiento de este.
+
+La función controles, que sirve para poder cambiar los controles con los que poder manejar al Jugador( C ), la cual recibe como parametros 4 variables de tipo puntero a char, y la tabla donde guardar los 4 controles.
+
+Esta función guarda la tecla que introducimos por teclado en (right, left, up, down), para pdoer usarlo maás tarde.
+Los controles predeterminados de este son: W, A, S, D.
+
+La siguiente función es la de jugador, la cual recibe como argumentos; el mapa, el resultado de cambiocontroles, los controles de la función anterior, el parámetro j, que es usado como un contador dentro del programa, y la variable mov, en la cual guardaremos el carácter que introduciremos por teclado.
+
+Comprobamos que primero que no se han hecho cambios en los controles y pasamos a la lógica del jugador.
+
+En primera instancia asociamos cada tecla a un tipo de movimiento; right,  left, up, down.
+Más terde usamos un Switch para comprobar que el movimiento es posible, es decir, que el jugador no cruce ni la puerta de los fantasmas representada con: ( - ), ni los muros representados con:( # ).
+
+jugador.h
+
+En este archivo,  declaramos las funciones que posteriormente desarrollamos en jugador.c
+void jugador (MAPA * mapa, int cambiocontroles, char controlesj1[4], int j, char mov);
+
+fantasma.c
+
+En el archivo fantasma.c  desarrollamos dos funciones: comprueba y fantasma.
+este archivo contiene la lógica de los fantasmas del come-cocos.
+
+La primera de estas se usa para saber que movimientos de los que tiene el fantasma son posibles, y recibe como argumentos el puntero a la variable posibilidades, el identificador del fantasma i, y el MAPA.
+De esta forma va comprobanda los 4 movimientos y si alguno es posible va aumentando un contador.
+Está hecho para evitar que si solo tenemos una opción pues se ha llegado a un callejón el fantasma tome esa opción.
+Está función devuelve mov, donde guardamos el identificador de movimiento,  en caso de tener un único movimiento guardara esté y en caso de más un número aleatorio entre (0-3)
+
+La funcion de fantasma recibe como argumentos el MAPA, una variable i que se usa como identificadro de los diferentes fantasmas, y la variable cla, que es un puntero a un entero.
+
+Primero recibimos el valor de mov de la función anterior y comenzamos a comprobar los movimientos posibles del fantasma.
+La variable cla se utiliza para guardar un número entre(1-4), con este número el fantasma recuerda por que camino ha venido, lo que le impide volver atrás a menos que sea la única opción posible.
+
+En caso de que tengamos dos opciones, el fantasma comprobará una de ellas al azar, y si lo que hace es volver  hacia atrás  vuelve a generar un numero aleatori diferente al suyo y probar con la otra opción.
+
+fantasma.h
+
+En este archivo,  declaramos las funciones que posteriormente desarrollamos en fantasma.c
+void fantasma(MAPA*mapa, int i, int * cla);
+int comprueba(int *posibles, int I, MAPA*mapa);
+
+keyboard.c
+
+En este archivo encontramos dos funciones: carácter y creaHilosKb.
+Este archivo se usa para poder capturar la tecla que introducimos por teclado.
+
+En la primera de ellas, carácter, creamos la variable mover que apunta a la estructura moving, la cual tenemos definida en “estructuras.h”, para que esté este siempre capturando la tecla que pulsamos usamos el while(1), y guardamos el valor capturado con getch, en mover que se corresponde al campo movin de la estructura moving.
+
+En la segunda función, creaHilosKb, usamos para poder crear un hilo de tipo DETACHED que recibe como argumento una variable a, que es un puntero a la estructura moving.
+Creamos el hilo dandole como atributo DETACHED para que este sea independiente del resto.
+
+keyboard.h
+
+Aqui definimos las funciones desarroladas en keyboard.c
+void * carácter(void * car);
+coid creaHilosKb(MOVING*a);
+
+choque.c
+
+Este archivo contiene el desarrollo de dos funciones que tratan del “choque ” del jugador con los fantasmas.
+La primera de ellas choque, recibe como argumentos dos estructuras(MAPA y MAPAANT ), y dos contadores, el contador i para los fantasmas y j para el jugador.
+
+Las dos clausulas que usamos es comprobar primero, si las coordenadas x e y del jugador y el fantasma coinciden, en cuyo caso tenemos una colisión.
+La otra clausula comprueba si las coordenadas anteriores del jugador coinciden con las coordenadas actuales del fantasma, lo que querrá decir que estos se han cruzado y por lo tanto ha habido choque.
+
+Está función devuelve la variable resultado de tipo entero, en la cual guardaremos un NO, hasta que el jugador choque o se cruce en cuyo caso lo cambiamos a SI.
+
+Esto lo hacemos por cada fantasma con cada jugador.
+
+La segunda función es guardamapa.
+Esta función recibe cmo argumentos las estructuras de :(MAPA y MAPAANT)
+
+Lo que hacemos es guardar la posición de los jugadores y de los fantasmas en la estrcutura MAPAANT, de esta forma nos aseguramos que cuando la posición se modifique en MAPA, en MAPAANT seguiremos teniendo la posición sin que se haya modificado con las nuevas coordeandas.
+
+choque.h
+
+En este archivo definimos las dos funcuiones:
+int choque(MAPA*mapa, MAPAANT * mapaAnt, int i, int j);
+void guardamapa(MAPA*mapa , MAPAANT * mapaAnt);
+
+semaforos.c
+
+En este archivo desarrollamos las funciones que crean borran y se encargan del manejo de los semáforos de nuestro programa.
+Este archivo tienes tres funciones: creaSemaforos, elimaSemaforos, subirSemaforos.
+
+La función creaSemaforos recibe como argumentos mapa que es un puntero a la estructura MAPA.
+Antes de comenzar con las competencias de esta función añadimos una linea al principio:
+eliminaSemaforos(mapa, TRUE), la cual borrara los semaforos creados para asegurarnos de que estos se crean desde el principio.
+
+Esta función tiene 4 bucles for, los dos primeros se encargan de reservar memoria para los semaforos de los jugadores y de los fantasmas.
+
+En caso de que no se pudiese reservar memoria imprimiría un error por pantalla.
+Los dos ultimos bucles for se usan para abrir los semaforos de los jugadores y los fantasmas, este proceso lo realizamos en la zona de memoria previamente reservada por calloc, y con la función sem_open vista en las prácticas, dandole los máximos permisos de administrador a cada uno de ellos.
+
+Esta función devuelve la variable error, que contendrá un TRUE en caso de que alguno de los 4 bucles for no se haya podido realizar.
+
+La segunda función es eliminaSemaforos, la cual recibe como argumentos un puntero a la estructura MAPA y la variable de tipo entero primeraVez.
+Esta función se encarga de cerrar los semaforos de los jugadores y los fantasmas,(sem_close), para posteriormente borralos con sem_unlink.
+
+Una vez cerrado y borrados los semáforos tenemos que liberar la zona de memoria reservada en la anterior función con calloc, para ello usamos free en las zonas de memoria reservadas para los jugadores y para los fantasmas.
+
+La ultima función es subirSemaforos la cual recibe como argumentos un puntero a la estructura MAPA.
+
+Esta función se encarga de subir el semaforo para cada fantasma y para cada jugador de forma que nos aseguremos un cierto sincronismo entre ellos.
+
+semaforos.h
+En este archivo definimos las tres funciones desarrolladas anteriormente.
+int creaSemaforos(MAPA*mapa);
+void eliminaSemaforos(MAPA*mapa, int primeraVez);
+void subirSemaforos(MAPA*mapa);
+
+imprimeMapa.c
+Este archivo consta de una única función que se encarga de imprimir por pantalla tanto el mapa con el que se juega como las posiciones de los jugadores y los fantasmas, ya que vamos a llamar a la función imprimeMapa cada vez que refresquemos las posiciones de los componentes del juego.
+
+Hemos definido como máximo  3 jugadores representados con la letra “C” y 3 fantasmas representados con el carácter “A”.
+Para mostrarlo todo por pantalla, la función necesita como argumentos de entrada tanto la estructura mapa y una variable inicio que nos indica si es la primera vez que ejecutamos la función.
+
+Mientras que no sea la primera vez que llamamos a esta función inicializamos la pantalla con los colores establecidos: rojo, azul y amarillo para los fantasmas y blanco para el comecocos.
+
+Primero imprimimos el título del juego: COMECOCOS – PROYECTO S.O.
+A continuación dejamos un margen de 2 para que quepa el título y comenzamos a imprimir el mapa en color amarillo.
+
+Para cada jugador se asigna un color y se imprime también el carácter “A” de ese color y en la posición indicada en la estructura mapa. Lo mismo hacemos para dada uno de los fantasmas.
+No devuelva nada, puesto que solo queremos que nos imprima por pantalla lo anteriormente mencionado.
+
+hilos.c
+
+En este archivo crearemos los hilos para cada una de las partes del juego.
+Este archivo consta de 4 funciones: hiloJugador, hiloFantasma, creaHilos, liberaHilos.
+Tenemos que tener en cuenta que todos los hilos deben tener la misma estructura de función, es decir deben ser funciones void que reciban como parametro un puntero a void.
+
+La función hiloJugador ricibe la variable pjugador que es de tipo puntero a void.
+esta función crea un hilo para el jugador del Come-Cocos.
+dentro de esta función y con pjugador le pasamos los resultados a la estructura definida en estructuras.h .
+Dentro de esta función y despues de rellenar nuestra estructura, aumentamos el semaforo del jugador, y hacemos un while de forma que este decremente el semaforo del jugador.
+tras esto, salimos del hilo.
+
+La función hiloFantasma recibe como argumento pfantasma del tipo puntero a void.
+esta función crea el hilo para un fantasma.
+Al igual que en anterior rellenamos la estructura que tenemos en “estructuras.h” y definimos la variable de tipo entero cla, que usa la función fantasma para recordar el camino.
+
+Aumento en semaforo del fantasma y entro dentro del while, dentro bajo el semaforo de fantasma, y alsalir del while salgo del hilo con pthread_exit.
+
+La función creaHilos recibe como argumentos una variable puntero a la estructura MAPA, una variable que es un puntero a la estructura HILOS, y una variable puntero ala estructura MOVING.
+
+En esta función nos encargamos de crear los diferentes hilos para el jugador y los fantasmas.
+Primero creamos un semaforo de control de lectura de las Estructuras de Jugador y Fantasma.
+
+Creo el semaforo “ComeCocos-LeeConfig” en caso de que este se haya creado de forma correcta reservo espacio para el jugador con la función calloc, tras comprobar que se ha reservado bien el esapcio, reservo espacio de la misma manera para el hilo del fantasma, cuando hayamos termiando de reservar espacio, pasamos a crear los hilos para el jugador y para los fantasmas.
+
+Tenemos dos bucles for, los cuales estan regulados por el semaforo de control creado anteriormente.
+Utilizamos el primer for para abrir los hilos para los jugadores, y el segundo para los hilos de los fantasmas.
+
+Tras crear los hilos de todos procedemos a cerrar el semaforo (leeConfig), y una vez cerrado lo borramos.
+
+Hacemos una comprobación al final en caso de que error sea igual a TRUE(lo que quiere decir que se ha dado algun error durante la función) procedo a usar la función liberaHilos para liberar los hilso que se hayan podido crear.
+Esta función devuelve la varibable error.
+
+La última funcion de este archivo es liberaHilos, la cual se encarga de liberar los hilos creados en el ComeCocos.
+Esta función recibe como parámetro una variable puntero a la estructura HILOS.
+Lo primero que hacemos es liberar el espacio que resevamos en la funcion de creahilos con calloc, una vez hecho esto ponemos los hilos a NULL, de forma que ya no se usen estos.
+
+hilos.h
+Definimos las funciones:
+int creaHilos(MAPA*mapa, HILOS*hilos, MOVING*moving);
+void liberaHilos(HILOS*hilos);
+
+principal.c
+
+Este archivo es el que contiene el metodo main de nuestro programa.
+Lo primero que encontramos en el es el mapa del ComeCocos, el cual tiene dos variables DIMY y DIMX, para marcar el rectangulo en el que está inscrito.
+
+ Seguidamente inicializamos las COORDENADAS del jugador y del fantasma para darles a estos el punto exacto del mapa en el que deberán empezar.
+Vemos que tenemos tambian las variables Ant, estas son para guardar las posiciones de memoriasanteriores como indicamos anteriormente, esto sirve sobretodo dentro de la función choque para saber si el jugador y el fantasma se cruzan.
+En este programa tenemos definido para que funcione con unúnico jugador y con tres fantasmas, aunque podría modificarse para añadir mas, ya que al inicializarse estos en hilos podemos poner tantos como queramos.
+
+Una vez hemos comprobado que los argumentos introducidos son los correctos, pricedemos en primer lugar a llamar a creaSemaforos, si este se inicializa bien, llamamos a creaHilos, y tras comprobar que este se incializa de forma correcta pasamos al grueso del programa.
+
+Primero llamamos a imprimeMapa, y con la función mvprint de la biblioteca ncurses imprimimos debajo del mapa el número de iteraciones que llevamos.
+
+Ahora inicializamos creaHilosKb de forma de que podamos empezara  capturar las pulsaciones del jugador para que este pueda moversa.
+
+Ahora entramos en el bucle for en el cual seguiremos a menos que salir == TRUE, lo que significará que ha ocurrido un choque entre el jugador y uno de los fantasmas, o de que alcancemos el máximo de iteracciones(100).
+
+realizamos usleep y procedemos a llamar a la función guardamapa, para guardar las posicion en mapaAnt antes de que esta se modifique.
+
+Subimos Semaforos para que se realice una iteración y transcurrido esto volvemos a imprimir el mapa.
+
+Vamos aumentando la funcion mvprintw en uno por cada iteracción.
+la sigueinte clausula if sirve para que cada 20 iteracciones aumentemos la velocidad de los fantasmas al doble.
+
+Refrescamos y comprobamos si ha ocurrido algun choque entre los fantasmas y el jugador.
+Tras salirdel bucle for por cualqueira de las dos razones mencionadas anteriormente, procedemos a realizar la liberación de los hilos.
+
+Eliminamos los semáforos he imprimimos el número de iteracciones que hemos durado en el juego.
+
+En caso de que el número de iteracciones sea igual a 100, significará que hemos ganado, de forma que imprimiremos por pantall el mensaje HA GANADO.
+Y termianmos la función del main con un return 0.
+
+
