@@ -18,9 +18,10 @@
 #include "keyboard.h"
 #include "choque.h"
 #include "titulo.h"
+#include "velocidad.h"
 
 #define NUMARGS			1
-#define MAX_IT			100
+//#define MAX_IT			100
 
 #define DIMY 			12
 #define DIMX 			20
@@ -36,7 +37,7 @@
 int main(int argc, char ** argv) {	
 
 	//VARIABLES
-	unsigned int numInteracciones = 0;
+	int numInteracciones = 0;
 	char cuadrado[DIMY][DIMX]= {
 		"###################",
 		"#                 #",
@@ -58,6 +59,9 @@ int main(int argc, char ** argv) {
 	}
 	HILOS hilos;
 	int n = 1000000;
+	int vel1 = 1;
+	int vel2 =2;
+	int maxIt =100;
 	int salir = FALSE;
 	MOVING moving; 
 	COORDENADA jugadores[NUMJUGADORES] = {{1,1}};
@@ -78,18 +82,19 @@ int main(int argc, char ** argv) {
 	} else {		
 		//TEMPORIZACION DEL PROGRAMA:			
 		imprimeTitulo();
+		velocidad(&vel1, &vel2, &maxIt);
 		imprimeMapa(mapa, TRUE);
 		mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", 0);
 		creaHilosKb(&moving);
 
-		for (i = 0; salir == FALSE && numInteracciones < MAX_IT ;i++) {							
+		for (i = 0; salir == FALSE && numInteracciones < maxIt ;i++) {							
 			usleep(n);
 			guardamapa(&mapa, &mapaAnt);
 			subirSemaforos(&mapa);			
 			imprimeMapa(mapa, FALSE);				
 			mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", ++numInteracciones);
 			if(i>=20){
-				n=n/2;
+				n=(n*vel1)/vel2;
 				i=0;
 				}
 			refresh();
@@ -104,7 +109,7 @@ int main(int argc, char ** argv) {
 	endwin();		
 	eliminaSemaforos(&mapa, FALSE);
 	printf("Usted ha durado %d interacciones\n", numInteracciones);
-	if(numInteracciones == MAX_IT) {
+	if(numInteracciones == maxIt) {
 		printf("HA GANADO!!!\n");
 	}
 	return 0;

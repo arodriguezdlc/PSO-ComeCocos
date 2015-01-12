@@ -26,7 +26,7 @@ void imprimeTitulo () {
  	printf("      Azahara Maria Porras Tejada         \n");
  	printf("      Francisco Javier Rodriguez Lopez    \n");
  	printf("                                          \n");	
- 	printf("    Pulse una tecla para continuar		  \n");
+ 	printf("     Pulse enter para continuar		  \n");
 	getchar();
 
 }
