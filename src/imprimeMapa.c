@@ -47,9 +47,12 @@ void imprimeMapa(MAPA mapa, int inicio) {
 		initscr(); //Inicializamos la pantalla
 		if (has_colors()) {
   			start_color();
+  			//PRIMERO COLORES FANTASMAS
   			init_pair(1, COLOR_RED, COLOR_BLACK);
-  			init_pair(2, COLOR_BLUE, COLOR_BLACK);
-  			init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+  			init_pair(2, COLOR_GREEN, COLOR_BLACK);
+  			init_pair(3, COLOR_MAGENTA, COLOR_BLACK);
+  			//DESPUES COLORES JUGADORES
+  			init_pair(4, COLOR_YELLOW, COLOR_BLACK);
 
   			init_pair(COLISION, COLOR_WHITE, COLOR_BLACK);
   		}
@@ -72,7 +75,7 @@ void imprimeMapa(MAPA mapa, int inicio) {
 	//detectaColisiones(MAPA * mapa);	TODO
 	for (i = 0; i < mapa.numJugadores; i++) {
 
-		attron(COLOR_PAIR(i+1));
+		attron(COLOR_PAIR(i+1+mapa.numFantasmas));
 		mvprintw((mapa.jugador[i].y)+2, mapa.jugador[i].x, "%c", simboloJugador);
 		refresh();
 		attroff(COLOR_PAIR(i+1));
