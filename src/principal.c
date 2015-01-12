@@ -17,6 +17,7 @@
 #include "imprimeMapa.h"
 #include "keyboard.h"
 #include "choque.h"
+#include "titulo.h"
 
 #define NUMARGS			1
 #define MAX_IT			100
@@ -76,6 +77,7 @@ int main(int argc, char ** argv) {
 		printf("Error en creaHilos\n");
 	} else {		
 		//TEMPORIZACION DEL PROGRAMA:			
+		imprimeTitulo();
 		imprimeMapa(mapa, TRUE);
 		mvprintw(mapa.dimensiones.y + 4,0, "Num Interacciones = %d", 0);
 		creaHilosKb(&moving);
