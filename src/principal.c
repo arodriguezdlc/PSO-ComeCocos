@@ -98,6 +98,7 @@ int main(int argc, char ** argv) {
 			}
 
 		}
+		sleep(2);
 		liberaHilos(&hilos);
 	}		
 	endwin();		
