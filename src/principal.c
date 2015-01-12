@@ -19,6 +19,7 @@
 #include "choque.h"
 #include "titulo.h"
 #include "velocidad.h"
+#include "gameover.h"
 
 #define NUMARGS			1
 //#define MAX_IT			100
@@ -112,5 +113,6 @@ int main(int argc, char ** argv) {
 	if(numInteracciones == maxIt) {
 		printf("HA GANADO!!!\n");
 	}
+	else gameover();
 	return 0;
 }

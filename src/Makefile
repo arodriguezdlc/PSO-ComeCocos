@@ -2,8 +2,8 @@
 #	MAKEFILE PSO-COMECOCOS
 #
 
-a.out: imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o keyboard.o choque.o titulo.o velocidad.o
-	gcc -g -W -Wall -pthread imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o keyboard.o choque.o titulo.o velocidad.o -lncurses -lpthread
+a.out: imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o keyboard.o choque.o titulo.o velocidad.o gameover.o
+	gcc -g -W -Wall -pthread imprimeMapa.o jugador.o fantasma.o hilos.o principal.o semaforos.o keyboard.o choque.o titulo.o velocidad.o gameover.o -lncurses -lpthread
 
 imprimeMapa.o: imprimeMapa.c	
 	gcc -g -W -Wall -c imprimeMapa.c
@@ -34,6 +34,9 @@ titulo.o: titulo.c
 
 velocidad.o: velocidad.c
 	gcc -g -W -Wall -c velocidad.c
+
+gameover.o: gameover.c
+	gcc -g -W -Wall -c gameover.c
 
 clean:
 	rm -rf *.o
