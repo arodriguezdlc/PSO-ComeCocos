@@ -111,7 +111,7 @@ int main(int argc, char ** argv) {
 	eliminaSemaforos(&mapa, FALSE);
 	printf("Usted ha durado %d interacciones\n", numInteracciones);
 	if(numInteracciones == maxIt) {
-		printf("HA GANADO!!!\n");
+		win();
 	}
 	else gameover();
 	return 0;

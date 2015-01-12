@@ -1,1 +1,2 @@
 void gameover();
+void win();
