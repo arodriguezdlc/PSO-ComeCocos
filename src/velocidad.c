@@ -31,7 +31,7 @@ switch(seleccion){
 	case (5):
 		*iteraciones = 200;
 		*velNum = 1;
-		*velDen = 4;
+		*velDen = 3;
 		break;
 	}
 }
